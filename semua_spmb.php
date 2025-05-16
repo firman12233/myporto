@@ -1,0 +1,260 @@
+<?php
+session_start();
+include 'koneksi.php';
+$success = $_GET['success'] ?? '';
+
+$role = $_SESSION['role'] ?? 'public';
+
+$limit = 15;
+$page = $_GET['page_spmb'] ?? 1;
+$start = ($page - 1) * $limit;
+
+$total = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM spmb"))['total'];
+$pages = ceil($total / $limit);
+
+$order_spmb = ($_GET['order_spmb'] ?? 'desc') === 'asc' ? 'ASC' : 'DESC';
+$new_order_spmb = $order_spmb === 'ASC' ? 'desc' : 'asc';
+
+$query = "SELECT * FROM spmb ORDER BY tahun $order_spmb LIMIT $start, $limit";
+$result = mysqli_query($koneksi, $query);
+
+$jurusan_list = [];
+$jurusan_query = mysqli_query($koneksi, "SELECT nama_jurusan FROM jurusan ORDER BY nama_jurusan");
+while ($jur = mysqli_fetch_assoc($jurusan_query)) {
+    $jurusan_list[] = $jur['nama_jurusan'];
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data SNBP</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.php">Smeansawi Berprestasi</a>
+  </div>
+</nav>
+<div class="container pt-5 mt-5">
+  <div class="d-flex justify-content-between mb-3">
+    <a href="index.php" class="btn btn-secondary">&larr; Kembali</a>
+    <?php if ($role === 'admin' || $role === 'operator'): ?>
+      <div>
+        <a href="export_spmb_excel.php" class="btn btn-success">Export Excel</a>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tambahSnbpModal">+ Tambah SNBP</button>
+      </div>
+    <?php endif; ?>
+  </div>
+  <div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-left flex-grow-1">Data SNBP SMKN 1 SLAWI</h2>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover" id="tabel">
+      <thead class="table-dark">
+        <tr>
+          <th>NIS</th>
+          <th>NISN</th>
+          <th>Nama</th>
+          <th>Jurusan</th>
+          <th>Universitas</th>
+          <th>Program Studi</th>
+          <th><a href="?order_spmb=<?= $new_order_spmb ?>" class="text-white">Tahun</a></th>
+          <th>Foto</th>
+          <?php if ($role === 'admin' || $role === 'operator') echo "<th>Aksi</th>"; ?>
+        </tr>
+      </thead>
+      <tbody>
+        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+          <tr>
+            <td class="text-center"><?= htmlspecialchars($row['nis']) ?></td>
+            <td class="text-center"><?= htmlspecialchars($row['nisn']) ?></td>
+            <td><?= htmlspecialchars($row['nama_siswa']) ?></td>
+            <td class="text-center"><?= htmlspecialchars($row['jurusan']) ?></td>
+            <td><?= htmlspecialchars($row['universitas']) ?></td>
+            <td><?= htmlspecialchars($row['prodi']) ?></td>
+            <td class="text-center"style="white-space: nowrap;"><?= htmlspecialchars($row['tahun']) ?></td>
+            <td>
+              <?php if (!empty($row['foto_siswa'])): ?>
+                <a href="uploads/<?= $row['foto_siswa'] ?>" data-lightbox="foto-<?= $row['id'] ?>">
+                  <img src="uploads/<?= $row['foto_siswa'] ?>" style="max-width: 50px;">
+                </a>
+              <?php else: ?>
+                <span class="text-muted">Tidak ada foto</span>
+              <?php endif; ?>
+            </td>
+            <?php if ($role === 'admin' || $role === 'operator'): ?>
+              <td>
+                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id'] ?>"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#hapusModal<?= $row['id'] ?>"><i class="bi bi-trash3-fill"></i></button>
+              </td>
+            <?php endif; ?>
+          </tr>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form action="edit_spmb.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?= $row['id'] ?>">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit SNBP</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body row g-3">
+          <div class="col-md-6"><label>NIS</label><input name="nis" class="form-control" value="<?= $row['nis'] ?>" required></div>
+          <div class="col-md-6"><label>NISN</label><input name="nisn" class="form-control" value="<?= $row['nisn'] ?>" required></div>
+          <div class="col-md-6"><label>Nama</label><input name="nama_siswa" class="form-control" value="<?= $row['nama_siswa'] ?>" required></div>
+          <div class="col-md-4">
+              <label class="form-label">Jurusan</label>
+              <select name="jurusan" class="form-control" required>
+  <?php foreach ($jurusan_list as $jur): ?>
+    <option value="<?= $jur ?>" <?= $jur == $row['jurusan'] ? 'selected' : '' ?>><?= $jur ?></option>
+  <?php endforeach; ?>
+</select>
+            </div>
+          <div class="col-md-6"><label>Universitas</label><input name="universitas" class="form-control" value="<?= $row['universitas'] ?>" required></div>
+          <div class="col-md-6"><label>Prodi</label><input name="prodi" class="form-control" value="<?= $row['prodi'] ?>" required></div>
+          <div class="col-md-4"><label>Tahun</label><input name="tahun" class="form-control" value="<?= $row['tahun'] ?>" required></div>
+          <div class="col-md-6">
+            <label>Foto</label>
+            <input type="file" name="foto_siswa" class="form-control">
+            <small class="text-muted"><?= $row['foto_siswa'] ?></small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit">Simpan</button>
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+          <!-- Modal Hapus -->
+          <div class="modal fade" id="hapusModal<?= $row['id'] ?>" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                  <h5 class="modal-title">Konfirmasi Hapus</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  Yakin ingin menghapus data <strong><?= htmlspecialchars($row['nama_siswa']) ?></strong>?
+                </div>
+                <div class="modal-footer">
+                  <a href="hapus.php?id=<?= $row['id'] ?>&tipe=spmb" class="btn btn-danger">Ya, Hapus</a>
+                  <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php endwhile; ?>
+      </tbody>
+    </table>
+  </div>
+
+<!-- Modal Tambah -->
+<<?php if ($role === 'admin' || $role === 'operator'): ?>
+  <div class="modal fade" id="tambahSnbpModal" tabindex="-1" aria-labelledby="tambahSnbpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form action="tambah_spmb.php" method="post" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tambahSnbpModalLabel">Tambah SNBP</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6 position-relative">
+              <label>Nama Siswa</label>
+              <input type="text" id="nama_siswa" name="nama_siswa" class="form-control" required />
+              <ul id="list_nama_siswa" class="list-group mt-1"></ul>
+            </div>
+              <div class="col-md-6">
+                <label for="nis" class="form-label">NIS</label>
+                <input type="text" name="nis" id="nis" class="form-control" readonly required>
+              </div>
+              <div class="col-md-6">
+                <label for="nisn" class="form-label">NISN</label>
+                <input type="text" name="nisn" id="nisn" class="form-control" readonly required>
+              </div>
+              <div class="col-md-6">
+                <label for="jurusan" class="form-label">Jurusan</label>
+                <select name="jurusan" id="jurusan" class="form-control" required>
+                  <?php foreach ($jurusan_list as $jur): ?>
+                    <option value="<?= htmlspecialchars($jur) ?>"><?= htmlspecialchars($jur) ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="universitas" class="form-label">Universitas</label>
+                <input type="text" name="universitas" id="universitas" class="form-control" required>
+              </div>
+              <div class="col-md-6">
+                <label for="prodi" class="form-label">Program Studi</label>
+                <input type="text" name="prodi" id="prodi" class="form-control" required>
+              </div>
+              <div class="col-md-6">
+                <label for="tahun" class="form-label">Tahun</label>
+                <input type="text" name="tahun" id="tahun" class="form-control" required>
+              </div>
+              <div class="col-md-12">
+                <label for="foto_siswa" class="form-label">Foto Siswa</label>
+                <input type="file" name="foto_siswa" id="foto_siswa" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  // Cari siswa berdasarkan input nama
+  $('#nama_siswa').keyup(function() {
+    let query = $(this).val();
+    if (query !== '') {
+      $.ajax({
+        url: "cari_siswa.php",
+        method: "POST",
+        data: { query: query },
+        success: function(data) {
+          $('#list_nama_siswa').fadeIn().html(data);
+        }
+      });
+    } else {
+      $('#list_nama_siswa').fadeOut();
+    }
+  });
+
+  // Isi otomatis data siswa
+  $(document).on('click', '.item-siswa', function() {
+    $('#nama_siswa').val($(this).text());
+    $('#nis').val($(this).data('nis'));
+    $('#nisn').val($(this).data('nisn'));
+    $('#jurusan').val($(this).data('jurusan'));
+    $('#list_nama_siswa').fadeOut();
+  });
+});
+</script>
+
+</body>
+</html>
