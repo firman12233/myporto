@@ -25,27 +25,69 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Semua Prestasi</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semua Prestasi - Smeansawi Berprestasi</title>
+
+  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- SweetAlert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
-    </style>
+
+  <style>
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+    .navbar-brand img {
+      max-height: 50px;
+    }
+  </style>
 </head>
 <body>
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="index.php">Smeansawi Berprestasi</a>
+    <a class="navbar-brand d-flex align-items-center" href="index.php">
+      <img src="assets/logo-smkn1slawi.png" alt="Logo SMK N 1 Slawi" class="img-fluid me-2">
+      <span class="fw-bold">SMK Negeri 1 Slawi</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="semua_prestasi.php">Prestasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="semua_spmb.php">SNBP</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown">Others</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="gallery.php">Gallery</a></li>
+            <li><a class="dropdown-item" href="sosmed.php">Sosmed</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+              <li><a class="dropdown-item" href="log_aktivitas.php">Log Aktivitas</a></li>
+              <li><a class="dropdown-item" href="tambah_siswa.php">Tambah Siswa</a></li>
+              <li><a class="dropdown-item" href="semua_jurusan.php">Tambah Jurusan</a></li>
+              <li><a class="dropdown-item" href="tambah_admin.php">Tambah Admin</a></li>
+            <?php endif; ?>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
+
+<!-- Konten -->
 <div class="container pt-5 mt-5">
   <div class="d-flex justify-content-between mb-3">
     <a href="index.php" class="btn btn-secondary">&larr; Kembali</a>

@@ -26,20 +26,67 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Data SNBP</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data SNBP - Smeansawi</title>
+
+  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+    .navbar-brand img {
+      max-height: 50px;
+    }
+  </style>
 </head>
 <body>
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="index.php">Smeansawi Berprestasi</a>
+    <a class="navbar-brand d-flex align-items-center" href="index.php">
+      <img src="assets/logo-smkn1slawi.png" alt="Logo SMK N 1 Slawi" class="img-fluid me-2">
+      <span class="fw-bold">SMK Negeri 1 Slawi</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="semua_prestasi.php">Prestasi</a></li>
+        <li class="nav-item"><a class="nav-link active" href="semua_spmb.php">SNBP</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown">Others</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="gallery.php">Gallery</a></li>
+            <li><a class="dropdown-item" href="sosmed.php">Sosmed</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+              <li><a class="dropdown-item" href="log_aktivitas.php">Log Aktivitas</a></li>
+              <li><a class="dropdown-item" href="tambah_siswa.php">Tambah Siswa</a></li>
+              <li><a class="dropdown-item" href="semua_jurusan.php">Tambah Jurusan</a></li>
+              <li><a class="dropdown-item" href="tambah_admin.php">Tambah Admin</a></li>
+            <?php endif; ?>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
+
+<!-- Konten -->
 <div class="container pt-5 mt-5">
   <div class="d-flex justify-content-between mb-3">
     <a href="index.php" class="btn btn-secondary">&larr; Kembali</a>
@@ -50,10 +97,12 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
       </div>
     <?php endif; ?>
   </div>
+
   <div class="container">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="text-left flex-grow-1">Data SNBP SMKN 1 SLAWI</h2>
   </div>
+
   <div class="table-responsive">
     <table class="table table-bordered table-striped table-hover" id="tabel">
       <thead class="table-dark">
@@ -64,7 +113,9 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
           <th>Jurusan</th>
           <th>Universitas</th>
           <th>Program Studi</th>
-          <th><a href="?order_spmb=<?= $new_order_spmb ?>" class="text-white">Tahun</a></th>
+          <th>
+            <a href="?order_spmb=<?= $new_order_spmb ?>" class="text-white">Tahun</a>
+          </th>
           <th>Foto</th>
           <?php if ($role === 'admin' || $role === 'operator') echo "<th>Aksi</th>"; ?>
         </tr>
@@ -78,7 +129,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
             <td class="text-center"><?= htmlspecialchars($row['jurusan']) ?></td>
             <td><?= htmlspecialchars($row['universitas']) ?></td>
             <td><?= htmlspecialchars($row['prodi']) ?></td>
-            <td class="text-center" style="white-space: nowrap;"><?= htmlspecialchars($row['tahun']) ?></td>
+            <td class="text-center"><?= htmlspecialchars($row['tahun']) ?></td>
             <td>
               <?php if (!empty($row['foto_siswa'])): ?>
                 <a href="uploads/<?= $row['foto_siswa'] ?>" data-lightbox="foto-<?= $row['id'] ?>">
@@ -90,54 +141,73 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
             </td>
             <?php if ($role === 'admin' || $role === 'operator'): ?>
               <td>
-                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id'] ?>"><i class="bi bi-pencil-square"></i></button>
-                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#hapusModal<?= $row['id'] ?>"><i class="bi bi-trash3-fill"></i></button>
+                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id'] ?>">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#hapusModal<?= $row['id'] ?>">
+                  <i class="bi bi-trash3-fill"></i>
+                </button>
               </td>
             <?php endif; ?>
           </tr>
 
-<!-- Modal Edit -->
-<div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <form action="edit_spmb.php" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="<?= $row['id'] ?>">
-        <div class="modal-header">
-          <h5 class="modal-title">Edit SNBP</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body row g-3">
-          <div class="col-md-6">
-            <label for="nis_edit_<?= $row['id'] ?>">NIS</label>
-            <input name="nis" id="nis_edit_<?= $row['id'] ?>" class="form-control nis-input" data-id="<?= $row['id'] ?>" value="<?= $row['nis'] ?>" required>
+          <!-- Modal Edit -->
+          <div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <form action="edit_spmb.php" method="post" enctype="multipart/form-data">
+                  <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Edit SNBP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body row g-3">
+                    <div class="col-md-6">
+                      <label for="nis_edit_<?= $row['id'] ?>">NIS</label>
+                      <input name="nis" id="nis_edit_<?= $row['id'] ?>" class="form-control nis-input" data-id="<?= $row['id'] ?>" value="<?= $row['nis'] ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label>NISN</label>
+                      <input name="nisn" id="nisn_edit_<?= $row['id'] ?>" class="form-control" value="<?= $row['nisn'] ?>" readonly required>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Nama</label>
+                      <input name="nama_siswa" id="nama_edit_<?= $row['id'] ?>" class="form-control" value="<?= $row['nama_siswa'] ?>" readonly required>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Jurusan</label>
+                      <select name="jurusan" id="jurusan_edit_<?= $row['id'] ?>" class="form-control" required>
+                        <?php foreach ($jurusan_list as $jur): ?>
+                          <option value="<?= $jur ?>" <?= $jur == $row['jurusan'] ? 'selected' : '' ?>><?= $jur ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Universitas</label>
+                      <input name="universitas" class="form-control" value="<?= $row['universitas'] ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Prodi</label>
+                      <input name="prodi" class="form-control" value="<?= $row['prodi'] ?>" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label>Tahun</label>
+                      <input name="tahun" class="form-control" value="<?= $row['tahun'] ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Foto</label>
+                      <input type="file" name="foto_siswa" class="form-control">
+                      <small class="text-muted"><?= $row['foto_siswa'] ?></small>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Simpan</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-          <div class="col-md-6"><label>NISN</label><input name="nisn" id="nisn_edit_<?= $row['id'] ?>" class="form-control" value="<?= $row['nisn'] ?>" readonly required></div>
-          <div class="col-md-6"><label>Nama</label><input name="nama_siswa" id="nama_edit_<?= $row['id'] ?>" class="form-control" value="<?= $row['nama_siswa'] ?>" readonly required></div>
-          <div class="col-md-4">
-            <label class="form-label">Jurusan</label>
-            <select name="jurusan" id="jurusan_edit_<?= $row['id'] ?>" class="form-control" required>
-              <?php foreach ($jurusan_list as $jur): ?>
-                <option value="<?= $jur ?>" <?= $jur == $row['jurusan'] ? 'selected' : '' ?>><?= $jur ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-          <div class="col-md-6"><label>Universitas</label><input name="universitas" class="form-control" value="<?= $row['universitas'] ?>" required></div>
-          <div class="col-md-6"><label>Prodi</label><input name="prodi" class="form-control" value="<?= $row['prodi'] ?>" required></div>
-          <div class="col-md-4"><label>Tahun</label><input name="tahun" class="form-control" value="<?= $row['tahun'] ?>" required></div>
-          <div class="col-md-6">
-            <label>Foto</label>
-            <input type="file" name="foto_siswa" class="form-control">
-            <small class="text-muted"><?= $row['foto_siswa'] ?></small>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" type="submit">Simpan</button>
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 
           <!-- Modal Hapus -->
           <div class="modal fade" id="hapusModal<?= $row['id'] ?>" tabindex="-1">
@@ -157,10 +227,13 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
               </div>
             </div>
           </div>
+
         <?php endwhile; ?>
       </tbody>
     </table>
   </div>
+</div>
+
 
 <!-- Modal Tambah -->
 <?php if ($role === 'admin' || $role === 'operator'): ?>

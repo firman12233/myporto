@@ -35,30 +35,33 @@ $total = $koneksi->query("SELECT COUNT(*) as total FROM prestasi")->fetch_assoc(
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Smeansawi Berprestasi</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="semua_prestasi.php">Prestasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="semua_spmb.php">SNBP</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown">Others</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="gallery.php">Gallery</a></li>
-              <li><a class="dropdown-item" href="sosmed.php">Sosmed</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                <li class="nav-item"><a class="nav-link text-dark " href="log_aktivitas.php">Log Aktivitas</a>
-                <li class="nav-item"><a class="nav-link text-dark " href="tambah_siswa.php">Tambah Siswa</a>
-                <li class="nav-item"><a class="nav-link text-dark " href="semua_jurusan.php">Tambah Jurusan</a>
-                <li class="nav-item"><a class="nav-link text-dark " href="tambah_admin.php">Tambah Admin</a>
-</li>
-<?php endif; ?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="assets/logo-smkn1slawi.png" alt="Logo SMK N 1 Slawi" class="img-fluid me-2" style="max-height: 50px;">
+      <span class="fw-bold">SMK Negeri 1 Slawi</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="semua_prestasi.php">Prestasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="semua_spmb.php">SNBP</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown">Others</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="gallery.php">Gallery</a></li>
+            <li><a class="dropdown-item" href="sosmed.php">Sosmed</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+              <li><a class="dropdown-item" href="log_aktivitas.php">Log Aktivitas</a></li>
+              <li><a class="dropdown-item" href="tambah_siswa.php">Tambah Siswa</a></li>
+              <li><a class="dropdown-item" href="semua_jurusan.php">Tambah Jurusan</a></li>
+              <li><a class="dropdown-item" href="tambah_admin.php">Tambah Admin</a></li>
+            <?php endif; ?>
             </ul>
           </li>
         </ul>
