@@ -31,6 +31,9 @@ $total = $koneksi->query("SELECT COUNT(*) as total FROM prestasi")->fetch_assoc(
   <title>Smeansawi Berprestasi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 
 </head>
 <body>
@@ -96,123 +99,134 @@ function persen($jumlah, $total) {
   return $total > 0 ? round(($jumlah / $total) * 100) : 0;
 }
 ?>
-<!-- Rekap Prestasi dengan Ikon dan Progress -->
+<!-- Bagian GABUNGAN: Rekap Prestasi & Total Siswa Lolos SNBP -->
 <div class="container py-5 mt-5">
-  <h2 class="mb-4 text-center">Rekap Jumlah Prestasi</h2>
+  <style>
+    .rekap-card {
+      transition: all 0.3s ease-in-out;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .rekap-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .rekap-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .rekap-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .rekap-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .rekap-progress {
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .section-divider {
+      width: 60px;
+      height: 4px;
+      background-color: #0d6efd;
+      border-radius: 2px;
+      margin: 0.5rem auto 1rem;
+    }
+
+    .card-lolos {
+      transition: all 0.3s ease-in-out;
+      border-radius: 1rem;
+    }
+
+    .card-lolos:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+
+  <!-- Bagian 1: Rekap Jumlah Prestasi -->
+  <h2 class="text-center fw-bold">Rekap Jumlah Prestasi</h2>
+  <div class="section-divider"></div>
+
   <div class="row justify-content-center g-4">
+    <?php
+    $cards = [
+      ['label' => 'Nasional', 'icon' => 'bi-flag', 'color' => 'info'],
+      ['label' => 'Provinsi', 'icon' => 'bi-globe-asia-australia', 'color' => 'warning'],
+      ['label' => 'Keresidenan', 'icon' => 'bi-house-door', 'color' => 'danger'],
+      ['label' => 'Kabupaten', 'icon' => 'bi-building', 'color' => 'primary'],
+      ['label' => 'Kecamatan', 'icon' => 'bi-geo', 'color' => 'success'],
+      ['label' => 'Sekolah', 'icon' => 'bi-mortarboard', 'color' => 'secondary'],
+      ['label' => 'Total', 'icon' => 'bi-award', 'color' => 'dark', 'total' => true],
+    ];
 
-    <!-- Nasional -->
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-      <div class="card text-white bg-info text-center">
-        <div class="card-body">
-          <i class="bi bi-flag fs-1 mb-2"></i>
-          <h6 class="card-title">Nasional</h6>
-          <p class="fs-4 mb-2"><?php echo $tingkatData['Nasional'] ?? 0; ?></p>
-          <div class="progress" style="height: 5px;">
-            <div class="progress-bar bg-light" style="width: <?= persen($tingkatData['Nasional'] ?? 0, $totalSemua) ?>%"></div>
+    foreach ($cards as $card) {
+      $jumlah = $card['total'] ?? false ? $total : ($tingkatData[$card['label']] ?? 0);
+      $persen = $card['total'] ?? false ? 100 : persen($jumlah, $totalSemua);
+    ?>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="card text-white bg-<?= $card['color'] ?> text-center rekap-card h-100">
+          <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
+            <i class="bi <?= $card['icon'] ?> rekap-icon"></i>
+            <div class="rekap-title"><?= $card['label'] ?></div>
+            <div class="rekap-number"><?= $jumlah ?></div>
+            <div class="rekap-progress w-100 bg-white bg-opacity-25">
+              <div class="progress-bar bg-light" style="width: <?= $persen ?>%; transition: width 0.6s;"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Provinsi -->
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-      <div class="card text-white bg-warning text-center">
-        <div class="card-body">
-          <i class="bi bi-globe-asia-australia fs-1 mb-2"></i>
-          <h6 class="card-title">Provinsi</h6>
-          <p class="fs-4 mb-2"><?php echo $tingkatData['Provinsi'] ?? 0; ?></p>
-          <div class="progress" style="height: 5px;">
-            <div class="progress-bar bg-light" style="width: <?= persen($tingkatData['Provinsi'] ?? 0, $totalSemua) ?>%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Keresidenan -->
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-      <div class="card text-white bg-danger text-center">
-        <div class="card-body">
-          <i class="bi bi-house-door fs-1 mb-2"></i>
-          <h6 class="card-title">Keresidenan</h6>
-          <p class="fs-4 mb-2"><?php echo $tingkatData['Keresidenan'] ?? 0; ?></p>
-          <div class="progress" style="height: 5px;">
-            <div class="progress-bar bg-light" style="width: <?= persen($tingkatData['Keresidenan'] ?? 0, $totalSemua) ?>%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Kabupaten -->
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-      <div class="card text-white bg-primary text-center">
-        <div class="card-body">
-          <i class="bi bi-building fs-1 mb-2"></i>
-          <h6 class="card-title">Kabupaten</h6>
-          <p class="fs-4 mb-2"><?php echo $tingkatData['Kabupaten'] ?? 0; ?></p>
-          <div class="progress" style="height: 5px;">
-            <div class="progress-bar bg-light" style="width: <?= persen($tingkatData['Kabupaten'] ?? 0, $totalSemua) ?>%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Kecamatan -->
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-      <div class="card text-white bg-success text-center">
-        <div class="card-body">
-          <i class="bi bi-geo fs-1 mb-2"></i>
-          <h6 class="card-title">Kecamatan</h6>
-          <p class="fs-4 mb-2"><?php echo $tingkatData['Kecamatan'] ?? 0; ?></p>
-          <div class="progress" style="height: 5px;">
-            <div class="progress-bar bg-light" style="width: <?= persen($tingkatData['Kecamatan'] ?? 0, $totalSemua) ?>%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-       <!-- Sekolah -->
-       <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-      <div class="card text-white bg-secondary text-center">
-        <div class="card-body">
-          <i class="bi bi-mortarboard fs-1 mb-2"></i>
-          <h6 class="card-title">Sekolah</h6>
-          <p class="fs-4 mb-2"><?php echo $tingkatData['Sekolah'] ?? 0; ?></p>
-          <div class="progress" style="height: 5px;">
-            <div class="progress-bar bg-light" style="width: <?= persen($tingkatData['Sekolah'] ?? 0, $totalSemua) ?>%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-      <!-- Total Prestasi -->
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-      <div class="card text-white bg-dark text-center">
-        <div class="card-body">
-          <i class="bi bi-award fs-1 mb-2"></i>
-          <h6 class="card-title">Total</h6>
-          <p class="fs-4 mb-2"><?php echo $total; ?></p>
-          <div class="progress" style="height: 5px;">
-            <div class="progress-bar bg-light" style="width: 100%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <?php } ?>
   </div>
-</div>
 
+  <!-- Bagian 2: Total Siswa Lolos SNBP -->
+  <div class="mt-5">
+    <h2 class="text-center fw-bold">Total Siswa Lolos SNBP</h2>
+    <div class="section-divider" style="background-color: #198754;"></div>
 
-<h2 class="mb-4 text-center">Total Siswa Lolos SNBP</h2>
-
-<div class="d-flex justify-content-center">
-  <div class="card shadow-lg border-0 bg-success text-white" style="max-width: 400px; width: 100%;">
-    <div class="card-body text-center py-4">
-      <h1 id="animatedNumber" class="display-4 fw-bold">0</h1>
-      <p class="fs-5 mb-0">Siswa diterima di perguruan tinggi</p>
+    <div class="d-flex justify-content-center">
+      <div class="card shadow-lg border-0 bg-success text-white card-lolos" style="max-width: 400px; width: 100%;">
+        <div class="card-body text-center py-4">
+          <h1 id="animatedNumber" class="display-4 fw-bold">0</h1>
+          <p class="fs-5 mb-0">Siswa diterima di perguruan tinggi</p>
+        </div>
+      </div>
     </div>
   </div>
+
+
+  <!-- Script animasi angka -->
+  <script>
+    const target = <?= $totalLolos ?>; // Ganti dengan nilai PHP sesuai jumlah siswa SNBP
+    const element = document.getElementById("animatedNumber");
+    let current = 0;
+    const duration = 1000;
+    const steps = 30;
+    const increment = target / steps;
+    const interval = duration / steps;
+
+    const counter = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(counter);
+      }
+      element.textContent = Math.floor(current);
+    }, interval);
+  </script>
 </div>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -276,6 +290,7 @@ function persen($jumlah, $total) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  
   <script>
 function confirmLogout() {
     return confirm("Yakin ingin keluar?");
