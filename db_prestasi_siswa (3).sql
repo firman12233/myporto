@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2025 at 03:10 AM
+-- Generation Time: May 20, 2025 at 06:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -43,6 +43,49 @@ INSERT INTO `admin` (`id_admin`, `username`, `password`, `role`) VALUES
 (13, 'operator1', '$2y$10$OkYkpd3FKosHXbAAwqDpY.2fVegwwAl0X3tTf5NRCjXO3kFVfhQkO', 'operator'),
 (14, 'operator2', '$2y$10$AFhbclP1VyJai6epV7OtKOC6GMSfcOI7KNG7pmNJKQM7QV0hF4DnW', 'operator'),
 (15, 'admin2', '$2y$10$bx8CCGeZ/ZQZY7mNW.0aguJ3zIUMabdWSsye7UYMnnAfm7GlWKeBa', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gallery`
+--
+
+CREATE TABLE `gallery` (
+  `id` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `tanggal` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `gallery`
+--
+
+INSERT INTO `gallery` (`id`, `judul`, `deskripsi`, `tanggal`) VALUES
+(5, 'Juara 2 Futsal Putri', 'SMK Negeri 1 Slawi berhasil meraih posisi Juara 2 dalam kompetisi Turnamen Asosiasi Futsal Kota Tegal kategori putri. Prestasi ini menunjukkan kemampuan dan semangat juang tinggi dari tim futsal putri sekolah dalam menghadapi berbagai tim tangguh di tingkat kota. Keberhasilan ini juga mencerminkan kerja keras, kekompakan, dan dedikasi para atlet serta pelatih dalam mempersiapkan diri menghadapi turnamen bergengsi tersebut.', '2025-05-19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gallery_foto`
+--
+
+CREATE TABLE `gallery_foto` (
+  `id` int(11) NOT NULL,
+  `gallery_id` int(11) NOT NULL,
+  `nama_file` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `gallery_foto`
+--
+
+INSERT INTO `gallery_foto` (`id`, `gallery_id`, `nama_file`) VALUES
+(12, 5, 'galeri_682aa8f5ec6c4.jpg'),
+(13, 5, 'galeri_682aa8f5ecadf.jpg'),
+(14, 5, 'galeri_682aa8f5ecde9.jpg'),
+(15, 5, 'galeri_682aa8f5ed3d4.jpg'),
+(16, 5, 'galeri_682aa8f5ed69c.jpeg');
 
 -- --------------------------------------------------------
 
@@ -307,7 +350,16 @@ INSERT INTO `log_aktivitas` (`id`, `user`, `aktivitas`, `waktu`) VALUES
 (214, 'admin', 'Menghapus data spmb ID 31', '2025-05-15 08:44:57'),
 (215, 'admin', 'Menghapus data prestasi ID 118', '2025-05-15 09:00:54'),
 (216, 'admin', 'Menambahkan data SNBP 125', '2025-05-15 09:01:09'),
-(217, 'admin', 'Menghapus data spmb ID 33', '2025-05-15 09:01:14');
+(217, 'admin', 'Menghapus data spmb ID 33', '2025-05-15 09:01:14'),
+(218, 'admin', 'Menambahkan data prestasi NIS 15975', '2025-05-16 06:46:57'),
+(219, 'admin', 'Menghapus data prestasi ID 120', '2025-05-16 06:47:19'),
+(220, 'admin', 'Menambahkan data SNBP 15975', '2025-05-16 07:03:17'),
+(221, 'admin', 'Menghapus data spmb ID 34', '2025-05-16 07:03:25'),
+(222, 'admin', 'Menambahkan galeri \'apa\' dengan 3 foto', '2025-05-19 03:13:35'),
+(223, 'admin', 'Menambahkan galeri \'apa\' dengan 3 foto', '2025-05-19 03:16:45'),
+(224, 'admin', 'Menambahkan galeri \'Juara 2 Futsal Putri\' dengan 5 foto', '2025-05-19 03:42:42'),
+(225, 'admin', 'Menambahkan galeri \'Juara 2 Futsal Putri\' dengan 5 foto', '2025-05-19 03:43:49'),
+(226, 'admin', 'Mengedit data prestasi ID 17', '2025-05-20 03:45:17');
 
 -- --------------------------------------------------------
 
@@ -390,48 +442,47 @@ CREATE TABLE `siswa` (
   `jenis_kelamin` varchar(10) NOT NULL,
   `kelas` varchar(10) DEFAULT NULL,
   `jurusan` varchar(50) DEFAULT NULL,
-  `tahun_ajaran` varchar(10) DEFAULT NULL
+  `tempat_lahir` varchar(100) DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `siswa`
 --
 
-INSERT INTO `siswa` (`id`, `nis`, `nisn`, `nama_siswa`, `jenis_kelamin`, `kelas`, `jurusan`, `tahun_ajaran`) VALUES
-(41, '125', '1112223338', 'riyan', 'Laki-Laki', 'Xll ', 'TJKT', '2024/2025'),
-(0, '134', '1112244444444', 'Budi Santoso', 'Laki-Laki', 'X', 'MM', '2024/2025'),
-(10, '15861', '16620', 'Ahmad Zindan Chalwani', 'Laki-Laki', 'XI TJKT', 'TJKT', '2024/2025'),
-(7, '15975', '16617', 'Dian Amaliah Putri', 'Perempuan', 'XI TJKT', 'TJKT', '2024/2025'),
-(11, '15987', '16621', 'Muhammad Fikri Ubaidillah', 'Laki-Laki', 'XI TJKT', 'TJKT', '2024/2025'),
-(4, '16321', '16614', 'Selsya Dera Amanda', 'Perempuan', 'XII OTKP 3', 'OTKP ', '2024/2025'),
-(8, '16345', '16618', 'Khalifatur Rizati', 'Perempuan', 'XI OTKP', 'OTKP', '2024/2025'),
-(6, '16436', '16616', 'Alissya Aulia Putri', 'Perempuan', 'XI AKL', 'AKL', '2024/2025'),
-(12, '16555', '16622', 'Fardan Abu Arbaz Basyari', 'Laki-Laki', 'XII PPLG 2', 'PPLG ', '2024/2025'),
-(3, '16587', '16613', 'Astri Rajulia', 'Perempuan', 'XII TJKT 1', 'TJKT', '2024/2025'),
-(2, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'Laki-Laki', 'XII TJKT 1', 'TJKT', '2024/2025'),
-(1, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'Laki-Laki', 'XII TJKT 1', 'TJKT', '2024/2025'),
-(9, '16724', '16619', 'Ailsa Rahmawati', 'Perempuan', 'XII BD 1', 'BPTV', '2024/2025'),
-(19, '16767', '16629', 'Dela Pratiwi', 'Perempuan', 'XII BR 1', 'BPTV', '2024/2025'),
-(5, '16769', '16615', 'Dwi Elfarianti', 'Perempuan', 'XII BR 1', 'BR ', '2024/2025'),
-(31, '17015', '16640', 'Dhia Azka Nuroani', 'Laki-Laki', 'XII AKL 1', 'AKL ', '2024/2025'),
-(28, '17020', '16637', 'Dwi Ayu Tresnowati', 'Perempuan', 'XII AKL 1', 'AKL ', '2024/2025'),
-(29, '17036', '16638', 'Nova Amelia', 'Perempuan', 'XII AKL 1', 'AKL ', '2024/2025'),
-(27, '17043', '16636', 'Salsa Ramadhani', 'Perempuan', 'XII AKL 1', 'AKL ', '2024/2025'),
-(15, '17065', '16625', 'Marselia Angelia', 'Perempuan', 'XII AKL 2', 'AKL ', '2024/2025'),
-(16, '17135', '16626', 'Nia Permatasari', 'Perempuan', 'XII AKL 4', 'AKL', '2024/2025'),
-(18, '17170', '16628', 'Inka Retno Aptiana', 'Perempuan', 'XII BP 1', 'BPTV', '2024/2025'),
-(17, '17173', '16627', 'Linda Saputri', 'Perempuan', 'XII BP 1', 'BPTV', '2024/2025'),
-(32, '17187', '16641', 'Vena Annisa', 'Perempuan', 'XII BP 1', 'BPTV', '2024/2025'),
-(13, '17209', '16623', 'Rahsya Ramadhan Izzulhaq', 'Laki-Laki', 'XI RPL', 'RPL', '2024/2025'),
-(21, '17463', '16631', 'Margareth Jesselyn A', 'Perempuan', 'XI BD 1', 'BPTV', '2024/2025'),
-(30, '17466', '16639', 'Mutiara Ananda Putri', 'Perempuan', 'XI BDP 1', 'PM', '2024/2025'),
-(20, '17467', '16630', 'Nasya Prima ZM', 'Laki-Laki', 'XI BD 1', 'BPTV', '2024/2025'),
-(22, '17532', '16632', 'Kayla Aulianisa', 'Laki-Laki', 'XI BR 2', 'BPTV', '2024/2025'),
-(23, '17555', '16633', 'Aulia Rizki Dwi FA', 'Laki-Laki', 'XI BR 3', 'BPTV', '2024/2025'),
-(14, '17769', '16624', 'Resa Naila Haya', 'Laki-Laki', 'XI OTKP', 'OTKP', '2024/2025'),
-(24, '18054', '16634', 'Syafira Nurlaeli', 'Laki-Laki', 'X TJKT', 'TJKT', '2024/2025'),
-(25, '18510', '16635', 'Muhammad Mirza Fadhil', 'Laki-Laki', 'X AKL 4', 'X AKL 4', '2024/2025'),
-(0, 'nis', 'nisn', 'nama_siswa', 'jenis_kela', 'kelas', 'jurusan', 'tahun_ajar');
+INSERT INTO `siswa` (`id`, `nis`, `nisn`, `nama_siswa`, `jenis_kelamin`, `kelas`, `jurusan`, `tempat_lahir`, `tanggal_lahir`) VALUES
+(41, '125', '1112223338', 'riyan', 'Laki-Laki', 'Xll ', 'TJKT', '', NULL),
+(10, '15861', '16620', 'Ahmad Zindan Chalwani', 'Laki-Laki', 'XI TJKT', 'TJKT', '', NULL),
+(7, '15975', '16617', 'Dian Amaliah Putri', 'Perempuan', 'XI TJKT', 'TJKT', '', NULL),
+(11, '15987', '16621', 'Muhammad Fikri Ubaidillah', 'Laki-Laki', 'XI TJKT', 'TJKT', '', NULL),
+(4, '16321', '16614', 'Selsya Dera Amanda', 'Perempuan', 'XII OTKP 3', 'OTKP ', '', NULL),
+(8, '16345', '16618', 'Khalifatur Rizati', 'Perempuan', 'XI OTKP', 'OTKP', '', NULL),
+(6, '16436', '16616', 'Alissya Aulia Putri', 'Perempuan', 'XI AKL', 'AKL', '', NULL),
+(12, '16555', '16622', 'Fardan Abu Arbaz Basyari', 'Laki-Laki', 'XII PPLG 2', 'PPLG ', '', NULL),
+(3, '16587', '16613', 'Astri Rajulia', 'Perempuan', 'XII TJKT 1', 'TJKT', '', NULL),
+(2, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'Laki-Laki', 'XII TJKT 1', 'TJKT', '', NULL),
+(1, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'Laki-Laki', 'XII TJKT 1', 'TJKT', '', NULL),
+(9, '16724', '16619', 'Ailsa Rahmawati', 'Perempuan', 'XII BD 1', 'BPTV', '', NULL),
+(19, '16767', '16629', 'Dela Pratiwi', 'Perempuan', 'XII BR 1', 'BPTV', '', NULL),
+(5, '16769', '16615', 'Dwi Elfarianti', 'Perempuan', 'XII BR 1', 'BR ', '', NULL),
+(31, '17015', '16640', 'Dhia Azka Nuroani', 'Laki-Laki', 'XII AKL 1', 'AKL ', '', NULL),
+(28, '17020', '16637', 'Dwi Ayu Tresnowati', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
+(29, '17036', '16638', 'Nova Amelia', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
+(27, '17043', '16636', 'Salsa Ramadhani', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
+(15, '17065', '16625', 'Marselia Angelia', 'Perempuan', 'XII AKL 2', 'AKL ', '', NULL),
+(16, '17135', '16626', 'Nia Permatasari', 'Perempuan', 'XII AKL 4', 'AKL', '', NULL),
+(18, '17170', '16628', 'Inka Retno Aptiana', 'Perempuan', 'XII BP 1', 'BPTV', '', NULL),
+(17, '17173', '16627', 'Linda Saputri', 'Perempuan', 'XII BP 1', 'BPTV', '', NULL),
+(32, '17187', '16641', 'Vena Annisa', 'Perempuan', 'XII BP 1', 'BPTV', '', NULL),
+(13, '17209', '16623', 'Rahsya Ramadhan Izzulhaq', 'Laki-Laki', 'XI RPL', 'RPL', '', NULL),
+(21, '17463', '16631', 'Margareth Jesselyn A', 'Perempuan', 'XI BD 1', 'BPTV', '', NULL),
+(30, '17466', '16639', 'Mutiara Ananda Putri', 'Perempuan', 'XI BDP 1', 'PM', '', NULL),
+(20, '17467', '16630', 'Nasya Prima ZM', 'Laki-Laki', 'XI BD 1', 'BPTV', '', NULL),
+(22, '17532', '16632', 'Kayla Aulianisa', 'Laki-Laki', 'XI BR 2', 'BPTV', '', NULL),
+(23, '17555', '16633', 'Aulia Rizki Dwi FA', 'Laki-Laki', 'XI BR 3', 'BPTV', '', NULL),
+(14, '17769', '16624', 'Resa Naila Haya', 'Laki-Laki', 'XI OTKP', 'OTKP', '', NULL),
+(24, '18054', '16634', 'Syafira Nurlaeli', 'Laki-Laki', 'X TJKT', 'TJKT', '', NULL),
+(25, '18510', '16635', 'Muhammad Mirza Fadhil', 'Laki-Laki', 'X AKL 4', 'X AKL 4', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -493,6 +544,19 @@ ALTER TABLE `admin`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `gallery`
+--
+ALTER TABLE `gallery`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gallery_foto`
+--
+ALTER TABLE `gallery_foto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `gallery_id` (`gallery_id`);
+
+--
 -- Indexes for table `jurusan`
 --
 ALTER TABLE `jurusan`
@@ -539,6 +603,18 @@ ALTER TABLE `admin`
   MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT for table `gallery`
+--
+ALTER TABLE `gallery`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `gallery_foto`
+--
+ALTER TABLE `gallery_foto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT for table `jurusan`
 --
 ALTER TABLE `jurusan`
@@ -548,19 +624,29 @@ ALTER TABLE `jurusan`
 -- AUTO_INCREMENT for table `log_aktivitas`
 --
 ALTER TABLE `log_aktivitas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
 
 --
 -- AUTO_INCREMENT for table `prestasi`
 --
 ALTER TABLE `prestasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `spmb`
 --
 ALTER TABLE `spmb`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `gallery_foto`
+--
+ALTER TABLE `gallery_foto`
+  ADD CONSTRAINT `gallery_foto_ibfk_1` FOREIGN KEY (`gallery_id`) REFERENCES `gallery` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
