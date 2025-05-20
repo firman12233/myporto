@@ -78,7 +78,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
             <td class="text-center"><?= htmlspecialchars($row['jurusan']) ?></td>
             <td><?= htmlspecialchars($row['universitas']) ?></td>
             <td><?= htmlspecialchars($row['prodi']) ?></td>
-            <td class="text-center"style="white-space: nowrap;"><?= htmlspecialchars($row['tahun']) ?></td>
+            <td class="text-center" style="white-space: nowrap;"><?= htmlspecialchars($row['tahun']) ?></td>
             <td>
               <?php if (!empty($row['foto_siswa'])): ?>
                 <a href="uploads/<?= $row['foto_siswa'] ?>" data-lightbox="foto-<?= $row['id'] ?>">
@@ -107,17 +107,20 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body row g-3">
-          <div class="col-md-6"><label>NIS</label><input name="nis" class="form-control" value="<?= $row['nis'] ?>" required></div>
-          <div class="col-md-6"><label>NISN</label><input name="nisn" class="form-control" value="<?= $row['nisn'] ?>" required></div>
-          <div class="col-md-6"><label>Nama</label><input name="nama_siswa" class="form-control" value="<?= $row['nama_siswa'] ?>" required></div>
+          <div class="col-md-6">
+            <label for="nis_edit_<?= $row['id'] ?>">NIS</label>
+            <input name="nis" id="nis_edit_<?= $row['id'] ?>" class="form-control nis-input" data-id="<?= $row['id'] ?>" value="<?= $row['nis'] ?>" required>
+          </div>
+          <div class="col-md-6"><label>NISN</label><input name="nisn" id="nisn_edit_<?= $row['id'] ?>" class="form-control" value="<?= $row['nisn'] ?>" readonly required></div>
+          <div class="col-md-6"><label>Nama</label><input name="nama_siswa" id="nama_edit_<?= $row['id'] ?>" class="form-control" value="<?= $row['nama_siswa'] ?>" readonly required></div>
           <div class="col-md-4">
-              <label class="form-label">Jurusan</label>
-              <select name="jurusan" class="form-control" required>
-  <?php foreach ($jurusan_list as $jur): ?>
-    <option value="<?= $jur ?>" <?= $jur == $row['jurusan'] ? 'selected' : '' ?>><?= $jur ?></option>
-  <?php endforeach; ?>
-</select>
-            </div>
+            <label class="form-label">Jurusan</label>
+            <select name="jurusan" id="jurusan_edit_<?= $row['id'] ?>" class="form-control" required>
+              <?php foreach ($jurusan_list as $jur): ?>
+                <option value="<?= $jur ?>" <?= $jur == $row['jurusan'] ? 'selected' : '' ?>><?= $jur ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
           <div class="col-md-6"><label>Universitas</label><input name="universitas" class="form-control" value="<?= $row['universitas'] ?>" required></div>
           <div class="col-md-6"><label>Prodi</label><input name="prodi" class="form-control" value="<?= $row['prodi'] ?>" required></div>
           <div class="col-md-4"><label>Tahun</label><input name="tahun" class="form-control" value="<?= $row['tahun'] ?>" required></div>
@@ -160,7 +163,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
   </div>
 
 <!-- Modal Tambah -->
-<<?php if ($role === 'admin' || $role === 'operator'): ?>
+<?php if ($role === 'admin' || $role === 'operator'): ?>
   <div class="modal fade" id="tambahSnbpModal" tabindex="-1" aria-labelledby="tambahSnbpModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -169,23 +172,22 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
             <h5 class="modal-title" id="tambahSnbpModalLabel">Tambah SNBP</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <div class="row g-3">
-              <div class="col-md-6 position-relative">
-              <label>Nama Siswa</label>
-              <input type="text" id="nama_siswa" name="nama_siswa" class="form-control" required />
-              <ul id="list_nama_siswa" class="list-group mt-1"></ul>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label>NIS</label>
+              <input type="text" name="nis" id="nis" class="form-control" required />
             </div>
               <div class="col-md-6">
-                <label for="nis" class="form-label">NIS</label>
-                <input type="text" name="nis" id="nis" class="form-control" readonly required>
+                <label for="nisn">NISN</label>
+                <input type="text" id="nisn" name="nisn" class="form-control" readonly required />
               </div>
               <div class="col-md-6">
-                <label for="nisn" class="form-label">NISN</label>
-                <input type="text" name="nisn" id="nisn" class="form-control" readonly required>
+                <label for="nama_siswa">Nama Siswa</label>
+                <input type="text" id="nama_siswa" name="nama_siswa" class="form-control" readonly required />
               </div>
               <div class="col-md-6">
-                <label for="jurusan" class="form-label">Jurusan</label>
+                <label for="jurusan">Jurusan</label>
                 <select name="jurusan" id="jurusan" class="form-control" required>
                   <?php foreach ($jurusan_list as $jur): ?>
                     <option value="<?= htmlspecialchars($jur) ?>"><?= htmlspecialchars($jur) ?></option>
@@ -193,19 +195,19 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
                 </select>
               </div>
               <div class="col-md-6">
-                <label for="universitas" class="form-label">Universitas</label>
+                <label for="universitas">Universitas</label>
                 <input type="text" name="universitas" id="universitas" class="form-control" required>
               </div>
               <div class="col-md-6">
-                <label for="prodi" class="form-label">Program Studi</label>
+                <label for="prodi">Program Studi</label>
                 <input type="text" name="prodi" id="prodi" class="form-control" required>
               </div>
               <div class="col-md-6">
-                <label for="tahun" class="form-label">Tahun</label>
+                <label for="tahun">Tahun</label>
                 <input type="text" name="tahun" id="tahun" class="form-control" required>
               </div>
               <div class="col-md-12">
-                <label for="foto_siswa" class="form-label">Foto Siswa</label>
+                <label for="foto_siswa">Foto Siswa</label>
                 <input type="file" name="foto_siswa" id="foto_siswa" class="form-control">
               </div>
             </div>
@@ -225,36 +227,45 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-  // Cari siswa berdasarkan input nama
-  $('#nama_siswa').keyup(function() {
-    let query = $(this).val();
-    if (query !== '') {
-      $.ajax({
-        url: "cari_siswa.php",
-        method: "POST",
-        data: { query: query },
-        success: function(data) {
-          $('#list_nama_siswa').fadeIn().html(data);
-        }
-      });
-    } else {
-      $('#list_nama_siswa').fadeOut();
-    }
-  });
 
-  // Isi otomatis data siswa
-  $(document).on('click', '.item-siswa', function() {
-    $('#nama_siswa').val($(this).text());
-    $('#nis').val($(this).data('nis'));
-    $('#nisn').val($(this).data('nisn'));
-    $('#jurusan').val($(this).data('jurusan'));
-    $('#list_nama_siswa').fadeOut();
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const nisInput = document.getElementById('nis');
+  
+  nisInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // mencegah form submit
+      const nis = nisInput.value.trim();
+
+      if (nis !== '') {
+        fetch(`get_siswa.php?nis=${nis}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.nama && data.nisn && data.jurusan) {
+              document.getElementById('nama_siswa').value = data.nama;
+              document.getElementById('nisn').value = data.nisn;
+              document.getElementById('jurusan').value = data.jurusan;
+            } else {
+              alert('Data siswa tidak ditemukan.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat mengambil data siswa.');
+          });
+      }
+    }
   });
 });
 </script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    new DataTable('#tabel', {
+      paging: true,
+      ordering: true,
+      info: false,
+    });
+  });
+</script>
 </body>
 </html>

@@ -226,14 +226,13 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
         </div>
         <div class="modal-body">
           <div class="row g-3">
-            <div class="col-md-6 position-relative">
-              <label>Nama Siswa</label>
-              <input type="text" id="nama_siswa" name="nama_siswa" class="form-control" required />
-              <ul id="list_nama_siswa" class="list-group mt-1"></ul>
-            </div>
             <div class="col-md-6">
               <label>NIS</label>
-              <input type="text" name="nis" id="nis" class="form-control" readonly required />
+              <input type="text" name="nis" id="nis" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+              <label>Nama Siswa</label>
+              <input type="text" name="nama_siswa" id="nama_siswa" class="form-control" readonly required />
             </div>
             <div class="col-md-6">
               <label>NISN</label>
@@ -301,31 +300,33 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-$(document).ready(function(){
-    // Pencarian siswa berdasarkan nama
-    $('#nama_siswa').keyup(function(){
-        let query = $(this).val();
-        if (query !== '') {
-            $.ajax({
-                url: "cari_siswa.php",  
-                method: "POST",
-                data: { query: query },
-                success: function(data){
-                    $('#list_nama_siswa').fadeIn().html(data);  // Menampilkan hasil pencarian
-                }
-            });
-        } else {
-            $('#list_nama_siswa').fadeOut();  // Menyembunyikan list jika input kosong
-        }
-    });
+document.addEventListener('DOMContentLoaded', function () {
+  const nisInput = document.getElementById('nis');
+  
+  nisInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // mencegah form submit
+      const nis = nisInput.value.trim();
 
-    $(document).on('click', '.item-siswa', function(){
-    $('#nama_siswa').val($(this).text());
-    $('#nis').val($(this).data('nis'));
-    $('#nisn').val($(this).data('nisn'));
-    $('#jurusan').val($(this).data('jurusan'));
-    $('#list_nama_siswa').fadeOut();
-});
+      if (nis !== '') {
+        fetch(`get_siswa.php?nis=${nis}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.nama && data.nisn && data.jurusan) {
+              document.getElementById('nama_siswa').value = data.nama;
+              document.getElementById('nisn').value = data.nisn;
+              document.getElementById('jurusan').value = data.jurusan;
+            } else {
+              alert('Data siswa tidak ditemukan.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat mengambil data siswa.');
+          });
+      }
+    }
+  });
 });
 </script>
 <script>

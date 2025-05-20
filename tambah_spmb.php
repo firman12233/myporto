@@ -40,13 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         simpan_log($koneksi, $_SESSION['username'], "Menambahkan data SNBP $nis");
         header("Location: tambah_spmb.php?pesan=sukses");
-exit();
+        exit();
     } else {
         header("Location: tambah_spmb.php?pesan=gagal");
-exit();
-
+        exit();
     }
-    exit();
 }
 ?>
 
@@ -55,38 +53,19 @@ exit();
 <head>
     <title>Tambah Data SPMB</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        #list_nama_siswa {
-            border: 1px solid #ccc;
-            max-height: 150px;
-            overflow-y: auto;
-            position: absolute;
-            background: white;
-            z-index: 999;
-            width: 100%;
-        }
-        .item-siswa {
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .item-siswa:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
 </head>
 <body class="container py-5">
     <h2 class="mb-4">Form Tambah Data SPMB</h2>
 
     <form method="POST" enctype="multipart/form-data" autocomplete="off">
         <div class="row g-3">
-            <div class="col-md-6 position-relative">
-                <label for="nama_siswa" class="form-label">Nama Siswa</label>
-                <input type="text" name="nama_siswa" id="nama_siswa" class="form-control" required>
-                <ul id="list_nama_siswa" class="list-group mt-1"></ul>
-            </div>
             <div class="col-md-6">
                 <label for="nis" class="form-label">NIS</label>
-                <input type="text" name="nis" id="nis" class="form-control" readonly required>
+                <input type="text" name="nis" id="nis" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label for="nama_siswa" class="form-label">Nama Siswa</label>
+                <input type="text" name="nama_siswa" id="nama_siswa" class="form-control" readonly required>
             </div>
             <div class="col-md-6">
                 <label for="nisn" class="form-label">NISN</label>
@@ -122,29 +101,44 @@ exit();
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-    $(document).ready(function(){
-        $('#nama_siswa').keyup(function(){
-            let query = $(this).val();
-            if (query !== '') {
-                $.ajax({
-                    url: "cari_siswa.php",
-                    method: "POST",
-                    data: { query: query },
-                    success: function(data){
-                        $('#list_nama_siswa').fadeIn().html(data);
-                    }
-                });
-            } else {
-                $('#list_nama_siswa').fadeOut();
-            }
-        });
+    $(document).ready(function() {
+        $('#nis').on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                let nis = $(this).val().trim();
 
-        $(document).on('click', '.item-siswa', function(){
-            $('#nama_siswa').val($(this).text());
-            $('#nis').val($(this).data('nis'));
-            $('#nisn').val($(this).data('nisn'));
-            $('#jurusan').val($(this).data('jurusan'));
-            $('#list_nama_siswa').fadeOut();
+                if (nis.length > 0) {
+                    $.ajax({
+                        url: 'get_siswa.php',
+                        method: 'GET',
+                        dataType: 'json',
+                        data: { nis: nis },
+                        success: function(data) {
+                            if (data && data.nama && data.nisn && data.jurusan) {
+                                $('#nama_siswa').val(data.nama);
+                                $('#nisn').val(data.nisn);
+                                $('#jurusan').val(data.jurusan);
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Data tidak ditemukan',
+                                    text: 'NIS yang dimasukkan tidak ada di database siswa.'
+                                });
+                                $('#nama_siswa').val('');
+                                $('#nisn').val('');
+                                $('#jurusan').val('');
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Gagal mengambil data siswa.'
+                            });
+                        }
+                    });
+                }
+            }
         });
     });
     </script>
@@ -176,5 +170,6 @@ exit();
         <?php endif; ?>
     </script>
     <?php endif; ?>
+
 </body>
 </html>
