@@ -14,13 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $deskripsi = trim($_POST['deskripsi']);
     $tanggal = date('Y-m-d');
 
-    // Validasi input
     if (empty($judul) || empty($deskripsi)) {
         $error = "Judul dan deskripsi harus diisi.";
     } elseif (empty($_FILES['foto']['name'][0])) {
         $error = "Minimal satu foto harus diunggah.";
-    } elseif (count($_FILES['foto']['name']) > 5) {
-        $error = "Maksimal 5 foto yang diperbolehkan.";
     } else {
         // Simpan data galeri
         $stmt = $koneksi->prepare("INSERT INTO gallery (judul, deskripsi, tanggal) VALUES (?, ?, ?)");
@@ -30,11 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $gallery_id = $stmt->insert_id;
 
             $foto_berhasil = 0;
+            $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
             foreach ($_FILES['foto']['name'] as $key => $nama_file) {
                 $tmp_name = $_FILES['foto']['tmp_name'][$key];
                 $ext = strtolower(pathinfo($nama_file, PATHINFO_EXTENSION));
-                // Validasi tipe file image
-                $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
                 if (!in_array($ext, $allowed_ext)) {
                     $error = "File $nama_file bukan format gambar yang diperbolehkan.";
                     break;
@@ -47,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmtFoto = $koneksi->prepare("INSERT INTO gallery_foto (gallery_id, nama_file) VALUES (?, ?)");
                     $stmtFoto->bind_param("is", $gallery_id, $nama_baru);
                     $stmtFoto->execute();
+                    $stmtFoto->close();
                     $foto_berhasil++;
                 }
             }
@@ -64,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -93,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="mb-3">
-                <label for="foto" class="form-label">Upload Foto (maks. 5 foto, format jpg/jpeg/png/gif/webp)</label>
+                <label for="foto" class="form-label">Upload Foto (format jpg/jpeg/png/gif/webp, jumlah bebas)</label>
                 <input type="file" name="foto[]" id="foto" class="form-control" accept="image/*" multiple required>
             </div>
 
