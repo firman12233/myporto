@@ -2,7 +2,6 @@
 session_start();
 include 'koneksi.php';
 
-// Fungsi ambil tahun dan bulan unik dari data galeri
 function getYearsMonths($koneksi) {
     $arr = ['years' => [], 'months' => []];
     $result = $koneksi->query("SELECT DISTINCT YEAR(tanggal) AS year, MONTH(tanggal) AS month FROM gallery ORDER BY year DESC, month DESC");
@@ -13,7 +12,6 @@ function getYearsMonths($koneksi) {
     return $arr;
 }
 
-// Ambil filter dari GET
 $filter_year = isset($_GET['year']) ? (int)$_GET['year'] : 0;
 $filter_month = isset($_GET['month']) ? (int)$_GET['month'] : 0;
 $search = isset($_GET['search']) ? $koneksi->real_escape_string(trim($_GET['search'])) : '';
@@ -25,7 +23,6 @@ if ($search !== '') $where[] = "g.judul LIKE '%$search%'";
 
 $where_sql = $where ? 'WHERE ' . implode(' AND ', $where) : '';
 
-// Query galeri dan foto (LEFT JOIN)
 $query = "SELECT g.id, g.judul, g.deskripsi, g.tanggal, f.nama_file 
           FROM gallery g
           LEFT JOIN gallery_foto f ON g.id = f.gallery_id
@@ -51,22 +48,14 @@ while ($row = $result->fetch_assoc()) {
 
 $yearMonthData = getYearsMonths($koneksi);
 
-// Tentukan galeri terbaru (3 teratas berdasarkan tanggal)
 $sortedByDate = $galeri;
-usort($sortedByDate, function($a, $b) {
-    return strtotime($b['tanggal']) - strtotime($a['tanggal']);
-});
+usort($sortedByDate, fn($a, $b) => strtotime($b['tanggal']) - strtotime($a['tanggal']));
 $latestIds = array_slice(array_keys($sortedByDate), 0, 3);
 
-// Tentukan galeri populer (3 teratas berdasarkan jumlah foto)
 $sortedByFotoCount = $galeri;
-usort($sortedByFotoCount, function($a, $b) {
-    return count($b['foto']) - count($a['foto']);
-});
+usort($sortedByFotoCount, fn($a, $b) => count($b['foto']) - count($a['foto']));
 $popularIds = array_slice(array_keys($sortedByFotoCount), 0, 3);
-
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -74,39 +63,15 @@ $popularIds = array_slice(array_keys($sortedByFotoCount), 0, 3);
     <title>Galeri Dokumentasi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
-        .galeri-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+        .galeri-item img { width: 100%; height: 200px; object-fit: cover; }
+        .galeri-item { margin-bottom: 30px; }
+        .deskripsi-terbatas { max-height: 80px; overflow: hidden; text-overflow: ellipsis; }
+        .badge-terbaru, .badge-populer {
+            position: absolute; top: 10px; left: 10px; z-index: 10;
+            font-size: 0.8rem; padding: 0.35em 0.6em;
         }
-        .galeri-item {
-            margin-bottom: 30px;
-        }
-        .deskripsi-terbatas {
-            max-height: 80px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        /* Label badge */
-        .badge-terbaru {
-            background-color: #198754; /* Bootstrap success */
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-            font-size: 0.8rem;
-            padding: 0.35em 0.6em;
-        }
-        .badge-populer {
-            background-color: #ffc107; /* Bootstrap warning */
-            color: #212529;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-            font-size: 0.8rem;
-            padding: 0.35em 0.6em;
-        }
+        .badge-terbaru { background-color: #198754; color: white; }
+        .badge-populer { background-color: #ffc107; color: #212529; }
     </style>
 </head>
 <body class="bg-light">
@@ -122,13 +87,7 @@ $popularIds = array_slice(array_keys($sortedByFotoCount), 0, 3);
 
     <form method="GET" class="row g-3 mb-4 align-items-center">
         <div class="col-auto">
-            <input
-                type="text"
-                name="search"
-                class="form-control"
-                placeholder="Cari nama lomba..."
-                value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
-            />
+            <input type="text" name="search" class="form-control" placeholder="Cari nama lomba..." value="<?= htmlspecialchars($search) ?>" />
         </div>
         <div class="col-auto">
             <select name="year" class="form-select" onchange="this.form.submit()">
@@ -188,3 +147,4 @@ $popularIds = array_slice(array_keys($sortedByFotoCount), 0, 3);
 </div>
 </body>
 </html>
+

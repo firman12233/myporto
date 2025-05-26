@@ -21,10 +21,12 @@ $result = $stmt->get_result();
 
 $galeri = ['foto' => []];
 while ($row = $result->fetch_assoc()) {
-    $galeri['judul'] = $row['judul'];
-    $galeri['deskripsi'] = $row['deskripsi'];
-    $galeri['tanggal'] = $row['tanggal'];
-    if (!empty($row['nama_file'])) {
+    if (!isset($galeri['judul'])) {
+        $galeri['judul'] = $row['judul'];
+        $galeri['deskripsi'] = $row['deskripsi'];
+        $galeri['tanggal'] = $row['tanggal'];
+    }
+    if (!empty($row['nama_file']) && count($galeri['foto']) < 10) {
         $galeri['foto'][] = $row['nama_file'];
     }
 }
