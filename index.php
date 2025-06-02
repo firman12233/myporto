@@ -208,7 +208,7 @@ function persen($jumlah, $total) {
 
   <!-- Script animasi angka -->
   <script>
-    const target = <?= $totalLolos ?>; // Ganti dengan nilai PHP sesuai jumlah siswa SNBP
+    const target = <?= $total_spmb ?>;
     const element = document.getElementById("animatedNumber");
     let current = 0;
     const duration = 1000;
@@ -216,14 +216,6 @@ function persen($jumlah, $total) {
     const increment = target / steps;
     const interval = duration / steps;
 
-    const counter = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        current = target;
-        clearInterval(counter);
-      }
-      element.textContent = Math.floor(current);
-    }, interval);
   </script>
 </div>
 
