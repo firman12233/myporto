@@ -45,6 +45,7 @@ if (isset($_POST['simpan'])) {
 <head>
   <meta charset="UTF-8">
   <title>Tambah Siswa</title>
+  <link rel="icon" href="logo-smkn1slawi1.png" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
