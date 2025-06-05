@@ -53,46 +53,45 @@ if (isset($_POST['simpan'])) {
   <h2 class="mb-4">Form Tambah Siswa</h2>
   <form method="POST" action="">
     <div class="mb-3">
-      <label for="nis" class="form-label">NIS</label>
-      <input type="text" class="form-control" id="nis" name="nis" required>
+      <label for="inputNIS" class="form-label">NIS</label>
+      <input type="text" class="form-control" id="inputNIS" name="nis" required>
     </div>
     <div class="mb-3">
-      <label for="nisn" class="form-label">NISN</label>
-      <input type="text" class="form-control" id="nisn" name="nisn" required>
+      <label for="inputNISN" class="form-label">NISN</label>
+      <input type="text" class="form-control" id="inputNISN" name="nisn" required>
     </div>
     <div class="mb-3">
-      <label for="nama" class="form-label">Nama</label>
-      <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required>
+      <label for="inputNama" class="form-label">Nama</label>
+      <input type="text" class="form-control" id="inputNama" name="nama_siswa" required>
     </div>
-    <div class="col-md-4">
-                <label>Jenis Kelamin</label>
-                <select name="jenis_kelamin" class="form-control" required>
-                <option value="" disabled selected>Pilih</option>
-                    <option>Laki-Laki</option>
-                    <option>Perempuan</option>
-                </select>
-            </div>
+    <div class="mb-3 col-md-4">
+      <label for="inputJK" class="form-label">Jenis Kelamin</label>
+      <select name="jenis_kelamin" id="inputJK" class="form-control" required>
+        <option value="" disabled selected>Pilih</option>
+        <option>Laki-Laki</option>
+        <option>Perempuan</option>
+      </select>
+    </div>
     <div class="mb-3">
-      <label for="kelas" class="form-label">Kelas</label>
-      <input type="text" class="form-control" id="kelas" name="kelas" required>
+      <label for="inputKelas" class="form-label">Kelas</label>
+      <input type="text" class="form-control" id="inputKelas" name="kelas" required>
     </div>
-    <div class="col-md-4">
-    <label>Jurusan</label>
-    <select name="jurusan" class="form-control" required>
+    <div class="mb-3 col-md-4">
+      <label for="inputJurusan" class="form-label">Jurusan</label>
+      <select name="jurusan" id="inputJurusan" class="form-control" required>
         <option value="" disabled selected>Pilih Jurusan</option>
         <?php
-        include 'koneksi.php'; // Pastikan koneksi ada
-
+        include 'koneksi.php';
         $query_jurusan = mysqli_query($koneksi, "SELECT * FROM jurusan WHERE status = 'Aktif' ORDER BY nama_jurusan ASC");
         while ($row_jurusan = mysqli_fetch_assoc($query_jurusan)) {
             echo '<option value="' . htmlspecialchars($row_jurusan['nama_jurusan']) . '">' . htmlspecialchars($row_jurusan['nama_jurusan']) . '</option>';
         }
         ?>
-    </select>
-</div>
+      </select>
+    </div>
     <div class="mb-3">
-      <label for="nis" class="form-label">Tempat Lahir</label>
-      <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" required>
+      <label for="inputTempatLahir" class="form-label">Tempat Lahir</label>
+      <input type="text" class="form-control" id="inputTempatLahir" name="tempat_lahir" required>
     </div>
     <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
     <a href="index.php" class="btn btn-secondary">Kembali</a>
@@ -114,6 +113,12 @@ Swal.fire({
     icon: 'error',
     title: 'Gagal!',
     text: 'Data siswa gagal ditambahkan!'
+});
+<?php elseif (isset($_GET['pesan']) && $_GET['pesan'] == 'duplikat'): ?>
+Swal.fire({
+    icon: 'warning',
+    title: 'Duplikat!',
+    text: 'NIS atau NISN sudah terdaftar!'
 });
 <?php endif; ?>
 </script>
