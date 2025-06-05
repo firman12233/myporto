@@ -29,6 +29,7 @@ $total = $koneksi->query("SELECT COUNT(*) as total FROM prestasi")->fetch_assoc(
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smeansawi Berprestasi</title>
+  <link rel="icon" href="logo-smkn1slawi1.png" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
