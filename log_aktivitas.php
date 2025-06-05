@@ -15,6 +15,7 @@ $logs = mysqli_query($koneksi, "SELECT * FROM log_aktivitas ORDER BY waktu DESC"
 <html>
 <head>
     <title>Log Aktivitas</title>
+    <link rel="icon" href="logo-smkn1slawi1.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>

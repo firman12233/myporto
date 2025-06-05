@@ -30,6 +30,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Semua Prestasi - Smeansawi Berprestasi</title>
+  <link rel="icon" href="logo-smkn1slawi1.png" type="image/png">
 
   <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
