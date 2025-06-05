@@ -58,7 +58,7 @@ if (isset($_POST['simpan'])) {
     </div>
     <div class="mb-3">
       <label for="nisn" class="form-label">NISN</label>
-      <input type="text" class="form-control" id="nis" name="nisn" required>
+      <input type="text" class="form-control" id="nisn" name="nisn" required>
     </div>
     <div class="mb-3">
       <label for="nama" class="form-label">Nama</label>
