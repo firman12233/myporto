@@ -66,8 +66,8 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="semua_prestasi.php">Prestasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="semua_prestasi.php">Prestasi</a></li>
         <li class="nav-item"><a class="nav-link" href="semua_spmb.php">SNBP</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown">Others</a>
