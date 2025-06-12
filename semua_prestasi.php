@@ -72,7 +72,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown">Others</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="gallery.php">Gallery</a></li>
+            <li><a class="dropdown-item" href="gallery.php">Dokumentasi</a></li>
             <li><a class="dropdown-item" href="sosmed.php">Sosmed</a></li>
             <li><hr class="dropdown-divider"></li>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
@@ -178,7 +178,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
             </div>
             <div class="col-md-4">
               <label class="form-label">Kompetensi Keahlian</label>
-              <select name="jurusan" class="form-control"required>
+              <select name="jurusan" id="jurusan" class="form-control" style="white-space: normal; word-wrap: break-word;" required>
   <?php foreach ($jurusan_list as $jur): ?>
     <option value="<?= $jur ?>" <?= $jur == $row['jurusan'] ? 'selected' : '' ?>><?= $jur ?></option>
   <?php endforeach; ?>
@@ -283,8 +283,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
             </div>
             <div class="col-md-4">
               <label>Kompetensi Keahlian</label>
-              <select name="jurusan" id="jurusan" class="form-control" required>
-                <!-- Jurusan options here -->
+              <select name="jurusan" id="jurusan" class="form-control" style="white-space: normal; word-wrap: break-word;" required>
                 <?php foreach ($jurusan_list as $jur): ?>
                   <option value="<?= $jur ?>"><?= $jur ?></option>
                 <?php endforeach; ?>

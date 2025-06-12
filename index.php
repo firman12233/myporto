@@ -66,7 +66,7 @@ $total = $koneksi->query("SELECT COUNT(*) as total FROM prestasi")->fetch_assoc(
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown">Others</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="gallery.php">Gallery</a></li>
+            <li><a class="dropdown-item" href="gallery.php">Dokumentasi</a></li>
             <li><a class="dropdown-item" href="sosmed.php">Sosmed</a></li>
             <li><hr class="dropdown-divider"></li>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
