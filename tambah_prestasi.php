@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="text" name="nisn" id="nisn" class="form-control" readonly>
             </div>
             <div class="col-md-6">
-                <label for="jurusan" class="form-label">Jurusan</label>
+                <label for="jurusan" class="form-label">Komptensi Keahlian</label>
                 <input type="text" name="jurusan" id="jurusan" class="form-control" readonly>
             </div>
             <div class="col-md-6">
