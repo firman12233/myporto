@@ -101,7 +101,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
   </div>
 <div class="container pt-5">
   <div class="d-flex justify-content-between mb-3">
-    <h2 class="text-left flex-grow-1">Data Prestasi Siswa SMKN 1 SLAWI</h2>
+    <h2 class="text-left flex-grow-1">Data Prestasi Siswa SMK NEGERI 1 SLAWI</h2>
   </div>
   <div class="table-responsive">
   <table class="table table-bordered table-striped table-hover" id="tabel">
