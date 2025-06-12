@@ -252,7 +252,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
             </div>
               <div class="col-md-6">
                 <label for="nisn">NISN</label>
-                <input type="text" id="nisn" name="nisn" class="form-control" readonly required />
+                <input type="text" id="nisn" name="nisn" class="form-control" readonly/>
               </div>
               <div class="col-md-6">
                 <label for="nama_siswa">Nama Siswa</label>
@@ -302,53 +302,32 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const tambahModal = document.getElementById('tambahSnbpModal');
+  const nisInput = document.getElementById('nis');
+  
+  nisInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // mencegah form submit
+      const nis = nisInput.value.trim();
 
-  if (tambahModal) {
-    tambahModal.addEventListener('shown.bs.modal', function () {
-      const nisInput = document.getElementById('nis');
-
-      if (nisInput) {
-        nisInput.focus(); // Opsional: Fokus otomatis
-
-        nisInput.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            const nis = nisInput.value.trim();
-
-            if (nis) {
-              fetch(`get_siswa.php?nis=${nis}`)
-                .then(response => response.json())
-                .then(data => {
-                  if (data.success) {
-                    document.getElementById('nisn').value = data.nisn;
-                    document.getElementById('nama_siswa').value = data.nama_siswa;
-                    document.getElementById('jurusan').value = data.jurusan;
-                  } else {
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'Data tidak ditemukan',
-                      text: 'NIS yang dimasukkan tidak cocok dengan data siswa.',
-                    });
-                    document.getElementById('nisn').value = '';
-                    document.getElementById('nama_siswa').value = '';
-                    document.getElementById('jurusan').value = '';
-                  }
-                })
-                .catch(err => {
-                  console.error('Gagal mengambil data:', err);
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Terjadi kesalahan',
-                    text: 'Tidak dapat mengambil data siswa.',
-                  });
-                });
+      if (nis !== '') {
+        fetch(`get_siswa.php?nis=${nis}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.nama && data.nisn && data.jurusan) {
+              document.getElementById('nama_siswa').value = data.nama;
+              document.getElementById('nisn').value = data.nisn;
+              document.getElementById('jurusan').value = data.jurusan;
+            } else {
+              alert('Data siswa tidak ditemukan.');
             }
-          }
-        });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat mengambil data siswa.');
+          });
       }
-    });
-  }
+    }
+  });
 });
 </script>
 <script>

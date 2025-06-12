@@ -51,12 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tambah Data SPMB</title>
+    <title>Tambah Data SNBP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container py-5">
-    <h2 class="mb-4">Form Tambah Data SPMB</h2>
-
+    <h2 class="mb-4">Form Tambah Data SNBP</h2>
     <form method="POST" enctype="multipart/form-data" autocomplete="off">
         <div class="row g-3">
             <div class="col-md-6">
@@ -72,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="text" name="nisn" id="nisn" class="form-control" readonly>
             </div>
             <div class="col-md-6">
-                <label for="jurusan" class="form-label">Jurusan</label>
+                <label for="jurusan" class="form-label">Kompetensi Keahlian</label>
                 <input type="text" name="jurusan" id="jurusan" class="form-control" readonly>
             </div>
             <div class="col-md-6">
