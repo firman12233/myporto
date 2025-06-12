@@ -111,7 +111,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
           <th>NIS</th>
           <th>NISN</th>
           <th>Nama</th>
-          <th>Jurusan</th>
+          <th>Kompetensi Keahlian</th>
           <th>Universitas</th>
           <th>Program Studi</th>
           <th class="text-center">Tahun</th>
@@ -174,7 +174,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
                       <input name="nama_siswa" id="nama_edit_<?= $row['id'] ?>" class="form-control" value="<?= $row['nama_siswa'] ?>" readonly required>
                     </div>
                     <div class="col-md-4">
-                      <label class="form-label">Jurusan</label>
+                      <label class="form-label">Kompetensi Keahlian</label>
                       <select name="jurusan" id="jurusan_edit_<?= $row['id'] ?>" class="form-control" required>
                         <?php foreach ($jurusan_list as $jur): ?>
                           <option value="<?= $jur ?>" <?= $jur == $row['jurusan'] ? 'selected' : '' ?>><?= $jur ?></option>
@@ -259,7 +259,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
                 <input type="text" id="nama_siswa" name="nama_siswa" class="form-control" readonly required />
               </div>
               <div class="col-md-6">
-                <label for="jurusan">Jurusan</label>
+                <label for="jurusan">Kompetensi Keahlian</label>
                 <select name="jurusan" id="jurusan" class="form-control" required>
                   <?php foreach ($jurusan_list as $jur): ?>
                     <option value="<?= htmlspecialchars($jur) ?>"><?= htmlspecialchars($jur) ?></option>
