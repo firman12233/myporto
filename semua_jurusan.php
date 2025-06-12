@@ -53,14 +53,12 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
         $stmt = mysqli_prepare($koneksi, $query);
         mysqli_stmt_bind_param($stmt, 'si', $statusBaru, $id);
         
-        // Menjalankan query dan memeriksa hasilnya
         if (mysqli_stmt_execute($stmt)) {
             echo "<script>alert('Jurusan berhasil diperbarui'); window.location.reload(true);</script>";
         } else {
             echo "<script>alert('Gagal memperbarui status jurusan');</script>";
         }
 
-        // Debugging: Memeriksa apakah query benar-benar berjalan
         if (mysqli_stmt_affected_rows($stmt) > 0) {
             // Berhasil mengubah status
             echo "<script>console.log('Status berhasil diperbarui');</script>";
@@ -75,7 +73,7 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Manajemen Jurusan</title>
+  <title>Manajemen Kompetensi Keahlian</title>
   <link rel="icon" href="logo-smkn1slawi1.png" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -101,8 +99,8 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
     </a>
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">Dashboard Jurusan</h2>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">+ Tambah Jurusan</button>
+    <h2 class="fw-bold">Dashboard Kompetensi Keahlian</h2>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">+ Tambah Kompetensi Keahlian</button>
   </div>
   <div class="card shadow-sm p-4">
     <div class="table-responsive">
@@ -110,7 +108,7 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
         <thead class="table-dark">
           <tr>
             <th>No</th>
-            <th>Nama Jurusan</th>
+            <th>Kompetensi Keahlian</th>
             <th>Status</th>
             <th>Aksi</th>
           </tr>
@@ -173,12 +171,12 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
   <div class="modal-dialog">
     <form action="tambah_jurusan.php" method="POST" class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Tambah Jurusan</h5>
+        <h5 class="modal-title">Tambah Kompetensi Keahlian</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          <label class="form-label">Nama Jurusan</label>
+          <label class="form-label">Nama Kompetensi Keahlian</label>
           <input type="text" name="nama_jurusan" class="form-control" required>
         </div>
       </div>
@@ -194,13 +192,13 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
   <div class="modal-dialog">
     <form action="semua_jurusan.php" method="POST" class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Jurusan</h5>
+        <h5 class="modal-title">Edit Kompetensi keahlian</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
       </div>
       <div class="modal-body">
         <input type="hidden" name="id_jurusan" id="edit_id">
         <div class="mb-3">
-          <label class="form-label">Nama Jurusan</label>
+          <label class="form-label">Kompetensi Keahlian</label>
           <input type="text" name="nama_jurusan" id="edit_nama" class="form-control" required>
         </div>
       </div>
@@ -264,7 +262,7 @@ function editJurusan(id, nama) {
 $(document).ready(function() {
   $('#tabelJurusan').DataTable({
     language: {
-      search: "Cari Jurusan:",
+      search: "Cari Kompetensi Keahlian:",
       lengthMenu: "Tampilkan MENU data",
       info: "Menampilkan START sampai END dari TOTAL data",
       paginate: {
@@ -288,7 +286,7 @@ $(document).ready(function() {
     Swal.fire({
         icon: 'error',
         title: 'Gagal',
-        text: 'Gagal menambahkan jurusan.'
+        text: 'Gagal menambahkan Kompetensi Keahlian.'
     });
 <?php endif; ?>
 </script>
@@ -297,7 +295,7 @@ $(document).ready(function() {
     Swal.fire({
         icon: 'success',
         title: 'Berhasil',
-        text: 'Jurusan berhasil dihapus!',
+        text: 'Kompetensi Keahlian berhasil dihapus!',
         timer: 2000,
         showConfirmButton: false
     });
@@ -305,7 +303,7 @@ $(document).ready(function() {
     Swal.fire({
         icon: 'error',
         title: 'Gagal',
-        text: 'Gagal menghapus jurusan.'
+        text: 'Gagal menghapus Kompetensi Keahlian.'
     });
 <?php endif; ?>
 </script>

@@ -110,7 +110,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
         <th>NIS</th>
         <th>NISN</th>
         <th>Nama Siswa</th>
-        <th class="text-center">Jurusan</th>
+        <th class="text-center">Kompetensi Keahlian</th>
         <th class="text-center">Prestasi</th>
         <th class="text-center">Juara</th>
         <th class="text-center">Tingkat</th>
@@ -177,8 +177,8 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
               <input type="text" name="nama_siswa" class="form-control" value="<?= $row['nama_siswa'] ?>" required>
             </div>
             <div class="col-md-4">
-              <label class="form-label">Jurusan</label>
-              <select name="jurusan" class="form-control" required>
+              <label class="form-label">Kompetensi Keahlian</label>
+              <select name="jurusan" class="form-control"required>
   <?php foreach ($jurusan_list as $jur): ?>
     <option value="<?= $jur ?>" <?= $jur == $row['jurusan'] ? 'selected' : '' ?>><?= $jur ?></option>
   <?php endforeach; ?>
@@ -282,7 +282,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
               <input type="text" name="nisn" id="nisn" class="form-control" readonly />
             </div>
             <div class="col-md-4">
-              <label>Jurusan</label>
+              <label>Kompetensi Keahlian</label>
               <select name="jurusan" id="jurusan" class="form-control" required>
                 <!-- Jurusan options here -->
                 <?php foreach ($jurusan_list as $jur): ?>
@@ -311,6 +311,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
                 <option value="Keresidenan">Keresidenan</option>
                 <option value="Provinsi">Provinsi</option>
                 <option value="Nasional">Nasional</option>
+                <option value="Nasional">Internasional</option>
               </select>
             </div>
             <div class="col-md-4"><label>Tahun</label><input type="date" name="tahun" class="form-control" required /></div>

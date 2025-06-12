@@ -14,7 +14,7 @@ echo "<tr>
 <th>NIS</th>
 <th>NISN</th>
 <th>Nama Siswa</th>
-<th>Jurusan</th>
+<th>Kompetensi Keahlian</th>
 <th>Prestasi</th>
 <th>Juara</th>
 <th>Tingkat</th>

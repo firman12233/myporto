@@ -38,6 +38,15 @@ $total = $koneksi->query("SELECT COUNT(*) as total FROM prestasi")->fetch_assoc(
 
 </head>
 <body>
+  <style>
+  .bg-indigo { background-color: #6610f2 !important; color: #fff; }
+  .bg-teal { background-color: #20c997 !important; color: #fff; }
+  .bg-cyan { background-color: #0dcaf0 !important; color: #000; }
+  .bg-orange { background-color: #fd7e14 !important; color: #fff; }
+  .bg-lime { background-color: #84cc16 !important; color: #000; }
+  .bg-rose { background-color: #e11d48 !important; color: #fff; }
+  .bg-amber { background-color: #f59e0b !important; color: #000; }
+</style>
   <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
@@ -63,7 +72,7 @@ $total = $koneksi->query("SELECT COUNT(*) as total FROM prestasi")->fetch_assoc(
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
               <li><a class="dropdown-item" href="log_aktivitas.php">Log Aktivitas</a></li>
               <li><a class="dropdown-item" href="tambah_siswa.php">Tambah Siswa</a></li>
-              <li><a class="dropdown-item" href="semua_jurusan.php">Tambah Jurusan</a></li>
+              <li><a class="dropdown-item" href="semua_jurusan.php">Tambah Kompetensi Keahlian</a></li>
               <li><a class="dropdown-item" href="tambah_admin.php">Tambah Admin</a></li>
             <?php endif; ?>
             </ul>
@@ -163,6 +172,7 @@ function persen($jumlah, $total) {
   <div class="row justify-content-center g-4">
     <?php
     $cards = [
+      ['label' => 'Internasional', 'icon' => 'bi bi-bank2', 'color' => 'indigo'],
       ['label' => 'Nasional', 'icon' => 'bi-flag', 'color' => 'info'],
       ['label' => 'Provinsi', 'icon' => 'bi-globe-asia-australia', 'color' => 'warning'],
       ['label' => 'Keresidenan', 'icon' => 'bi-house-door', 'color' => 'danger'],

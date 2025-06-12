@@ -74,12 +74,12 @@ if (isset($_POST['simpan'])) {
     </div>
     <div class="mb-3">
       <label for="inputKelas" class="form-label">Kelas</label>
-      <input type="text" class="form-control" id="inputKelas" name="kelas" required>
+      <input type="text" class="form-control" id="inputKelas" name="kelas" placeholder="X,Xl,Xll"required>
     </div>
     <div class="mb-3 col-md-4">
-      <label for="inputJurusan" class="form-label">Jurusan</label>
+      <label for="inputJurusan" class="form-label">Kompetensi Keahlian</label>
       <select name="jurusan" id="inputJurusan" class="form-control" required>
-        <option value="" disabled selected>Pilih Jurusan</option>
+        <option value="" disabled selected>Pilih Kompetensi Keahlian</option>
         <?php
         include 'koneksi.php';
         $query_jurusan = mysqli_query($koneksi, "SELECT * FROM jurusan WHERE status = 'Aktif' ORDER BY nama_jurusan ASC");
