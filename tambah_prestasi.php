@@ -3,6 +3,15 @@ session_start();
 include 'koneksi.php';
 require_once 'fungsi_log.php';
 
+// Aktifkan error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Cek koneksi database
+if ($koneksi->connect_error) {
+    die("Koneksi gagal: " . $koneksi->connect_error);
+}
+
 if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'operator'])) {
     header("Location: login.php");
     exit();
@@ -16,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lomba      = $_POST['nama_lomba'];
     $tingkat    = $_POST['tingkat'];
     $juara      = $_POST['juara'];
+    $penyelenggara = $_POST['penyelenggara'];
     $tahun      = $_POST['tahun'];
     $kategori   = $_POST['kategori'];
 
@@ -34,17 +44,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $foto = '';
     if (!empty($_FILES['foto_bukti']['name'])) {
         $foto = uniqid() . '_' . basename($_FILES['foto_bukti']['name']);
-        move_uploaded_file($_FILES['foto_bukti']['tmp_name'], 'uploads/' . $foto);
+        if (!move_uploaded_file($_FILES['foto_bukti']['tmp_name'], 'uploads/' . $foto)) {
+            echo "Gagal mengupload file.";
+            exit();
+        }
     }
 
-    $stmt = $koneksi->prepare("INSERT INTO prestasi (nama_siswa, nis, nisn, jurusan, nama_lomba, tingkat, juara, tahun, kategori, foto_bukti) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssssss", $nama_siswa, $nis, $nisn, $jurusan, $lomba, $tingkat, $juara, $tahun, $kategori, $foto);
+    // Debugging: Tampilkan data yang akan dimasukkan
+    echo "<pre>";
+    echo "Nama Siswa: $nama_siswa\n";
+    echo "NIS: $nis\n";
+    echo "NISN: $nisn\n";
+    echo "Jurusan: $jurusan\n";
+    echo "Nama Lomba: $lomba\n";
+    echo "Tingkat: $tingkat\n";
+    echo "Juara: $juara\n";
+    echo "Penyelenggara: $penyelenggara\n";
+    echo "Tahun: $tahun\n";
+    echo "Kategori: $kategori\n";
+    echo "Foto Bukti: $foto\n";
+    echo "</pre>";
+
+    $stmt = $koneksi->prepare("INSERT INTO prestasi (nama_siswa, nis, nisn, jurusan, nama_lomba, tingkat, juara, penyelenggara, tahun, kategori, foto_bukti) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssss", $nama_siswa, $nis, $nisn, $jurusan, $lomba, $tingkat, $juara, $penyelenggara, $tahun, $kategori, $foto);
 
     if ($stmt->execute()) {
         simpan_log($koneksi, $_SESSION['username'], "Menambahkan data prestasi NIS $nis");
         header("Location: tambah_prestasi.php?pesan=sukses");
         exit();
     } else {
+        echo "Error: " . $stmt->error; // Tampilkan error jika ada
         header("Location: tambah_prestasi.php?pesan=gagal");
         exit();
     }
@@ -94,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="text" name="nisn" id="nisn" class="form-control" readonly>
             </div>
             <div class="col-md-6">
-                <label for="jurusan" class="form-label">Komptensi Keahlian</label>
+                <label for="jurusan" class="form-label">Kompetensi Keahlian</label>
                 <input type="text" name="jurusan" id="jurusan" class="form-control" readonly>
             </div>
             <div class="col-md-6">
@@ -124,6 +153,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <option>Juara Harapan 2</option>
                     <option>Juara Harapan 3</option>
                 </select>
+            </div>
+            <div class="col-md-6">
+                <label for="penyelenggara" class="form-label">Penyelenggara</label>
+                <input type="text" name="penyelenggara" id="penyelenggara" class="form-control" required>
             </div>
             <div class="col-md-4">
                 <label for="tahun" class="form-label">Tahun</label>

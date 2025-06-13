@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lomba      = $_POST['nama_lomba'];
     $tingkat    = $_POST['tingkat'];
     $juara      = $_POST['juara'];
+    $penyelenggara = $_POST['penyelenggara'];
     $tahun      = $_POST['tahun'];
     $kategori   = $_POST['kategori'];
 
@@ -22,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         move_uploaded_file($_FILES['foto_bukti']['tmp_name'], 'uploads/' . $foto_bukti);
 
         // Update dengan file foto baru
-        $stmt = $koneksi->prepare("UPDATE prestasi SET nama_siswa=?, nis=?, nisn=?, jurusan=?, nama_lomba=?, tingkat=?, juara=?, tahun=?, kategori=?, foto_bukti=? WHERE id=?");
-        $stmt->bind_param("ssssssssssi", $nama, $nis, $nisn, $jurusan, $lomba, $tingkat, $juara, $tahun, $kategori, $foto_bukti, $id);
+        $stmt = $koneksi->prepare("UPDATE prestasi SET nama_siswa=?, nis=?, nisn=?, jurusan=?, nama_lomba=?, tingkat=?, juara=?, penyelenggara=?, tahun=?, kategori=?, foto_bukti=? WHERE id=?");
+        $stmt->bind_param("sssssssssssi", $nama, $nis, $nisn, $jurusan, $lomba, $tingkat, $juara, $penyelenggara, $tahun, $kategori, $foto_bukti, $id);
     } else {
         // Update tanpa mengubah foto
-        $stmt = $koneksi->prepare("UPDATE prestasi SET nama_siswa=?, nis=?, nisn=?, jurusan=?, nama_lomba=?, tingkat=?, juara=?, tahun=?, kategori=? WHERE id=?");
-        $stmt->bind_param("sssssssssi", $nama, $nis, $nisn, $jurusan, $lomba, $tingkat, $juara, $tahun, $kategori, $id);
+        $stmt = $koneksi->prepare("UPDATE prestasi SET nama_siswa=?, nis=?, nisn=?, jurusan=?, nama_lomba=?, tingkat=?, juara=?, penyelenggara=?, tahun=?, kategori=? WHERE id=?");
+        $stmt->bind_param("ssssssssssi", $nama, $nis, $nisn, $jurusan, $lomba, $tingkat, $juara, $penyelenggara,  $tahun, $kategori, $id);
     }
 
     if ($stmt->execute()) {
