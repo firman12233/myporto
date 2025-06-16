@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2025 at 06:47 AM
+-- Generation Time: Jun 16, 2025 at 08:08 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -62,7 +62,8 @@ CREATE TABLE `gallery` (
 --
 
 INSERT INTO `gallery` (`id`, `judul`, `deskripsi`, `tanggal`) VALUES
-(5, 'Juara 2 Futsal Putri', 'SMK Negeri 1 Slawi berhasil meraih posisi Juara 2 dalam kompetisi Turnamen Asosiasi Futsal Kota Tegal kategori putri. Prestasi ini menunjukkan kemampuan dan semangat juang tinggi dari tim futsal putri sekolah dalam menghadapi berbagai tim tangguh di tingkat kota. Keberhasilan ini juga mencerminkan kerja keras, kekompakan, dan dedikasi para atlet serta pelatih dalam mempersiapkan diri menghadapi turnamen bergengsi tersebut.', '2025-05-19');
+(5, 'Juara 2 Futsal Putri', 'SMK Negeri 1 Slawi berhasil meraih posisi Juara 2 dalam kompetisi Turnamen Asosiasi Futsal Kota Tegal kategori putri. Prestasi ini menunjukkan kemampuan dan semangat juang tinggi dari tim futsal putri sekolah dalam menghadapi berbagai tim tangguh di tingkat kota. Keberhasilan ini juga mencerminkan kerja keras, kekompakan, dan dedikasi para atlet serta pelatih dalam mempersiapkan diri menghadapi turnamen bergengsi tersebut.', '2025-05-19'),
+(6, 'Juara 2 Futsal Putri', 'SMK Negeri 1 Slawi berhasil meraih Juara 2 dalam ajang Turnamen Futsal Putri yang diselenggarakan oleh Sunflower Organizer.\r\nKompetisi ini berlangsung di GOR Indoor dari tanggal 16 hingga 25 Mei 2025 dan diikuti oleh berbagai tim futsal putri tingkat SMA/SMK.\r\nDengan semangat juang tinggi dan kerja sama tim yang solid, tim futsal putri SMK N 1 Slawi berhasil menampilkan performa impresif dan meraih posisi runner-up setelah melalui serangkaian pertandingan yang kompetitif.\r\n\r\nPrestasi ini semakin membanggakan karena salah satu pemain dari SMK N 1 Slawi juga dinobatkan sebagai Best Player dalam turnamen kategori putri ini, berkat kontribusi luar biasa dan konsistensinya sepanjang kompetisi.\r\nPenghargaan ini menjadi bukti keunggulan individu dan tim, serta potensi besar siswa-siswi SMK N 1 Slawi dalam bidang olahraga.', '2025-05-26');
 
 -- --------------------------------------------------------
 
@@ -85,7 +86,16 @@ INSERT INTO `gallery_foto` (`id`, `gallery_id`, `nama_file`) VALUES
 (13, 5, 'galeri_682aa8f5ecadf.jpg'),
 (14, 5, 'galeri_682aa8f5ecde9.jpg'),
 (15, 5, 'galeri_682aa8f5ed3d4.jpg'),
-(16, 5, 'galeri_682aa8f5ed69c.jpeg');
+(16, 5, 'galeri_682aa8f5ed69c.jpeg'),
+(17, 6, 'galeri_68342275b7713.jpeg'),
+(18, 6, 'galeri_68342275b9b7a.jpeg'),
+(19, 6, 'galeri_68342275bb18b.jpeg'),
+(20, 6, 'galeri_68342275be250.jpeg'),
+(21, 6, 'galeri_68342275bf67c.jpeg'),
+(22, 6, 'galeri_68342275c0b89.jpeg'),
+(23, 6, 'galeri_68342275c1f7a.jpeg'),
+(24, 6, 'galeri_68342275c3410.jpeg'),
+(25, 6, 'galeri_68342275c4831.jpeg');
 
 -- --------------------------------------------------------
 
@@ -104,17 +114,22 @@ CREATE TABLE `jurusan` (
 --
 
 INSERT INTO `jurusan` (`id_jurusan`, `nama_jurusan`, `status`) VALUES
-(1, 'OTKP', 'Aktif'),
-(2, 'AKL', 'Aktif'),
-(3, 'BDP', 'Aktif'),
-(4, 'MPLB', 'Aktif'),
-(5, 'RPL', 'Aktif'),
-(6, 'MM', 'Aktif'),
-(7, 'BPTV', 'Aktif'),
-(8, 'PPLG', 'Aktif'),
-(9, 'TJKT', 'Aktif'),
-(10, 'TKJ', 'Aktif'),
-(11, 'PM', 'Aktif');
+(1, 'Otomatisasi dan Tata Kelola Perkantoran', 'Nonaktif'),
+(2, 'Akuntansi dan Keuangan Lembaga', 'Aktif'),
+(3, 'Bisnis Daring dan Pemasaran', 'Aktif'),
+(4, 'Manajemen Perkantoran dan Layanan Bisnis', 'Aktif'),
+(5, 'Rekayasa Perangkat Lunak', 'Nonaktif'),
+(6, 'Multimedia', 'Nonaktif'),
+(7, 'Broadcasting dan Perfilman', 'Aktif'),
+(8, 'Pengembangan Perangkat Lunak dan Gim', 'Aktif'),
+(9, 'Teknik Jaringan Komputer dan Telekomunikasi\r\n', 'Aktif'),
+(10, 'Teknik Jaringan Komputer ', 'Nonaktif'),
+(11, 'Pemasaran', 'Nonaktif'),
+(23, 'Bisnis Digital', 'Aktif'),
+(24, 'Bisnis Retail', 'Aktif'),
+(25, 'Manajemen Perkantoran', 'Aktif'),
+(26, 'Akuntansi', 'Aktif'),
+(27, 'Produksi dan Siaran Program Televisi', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -359,7 +374,11 @@ INSERT INTO `log_aktivitas` (`id`, `user`, `aktivitas`, `waktu`) VALUES
 (223, 'admin', 'Menambahkan galeri \'apa\' dengan 3 foto', '2025-05-19 03:16:45'),
 (224, 'admin', 'Menambahkan galeri \'Juara 2 Futsal Putri\' dengan 5 foto', '2025-05-19 03:42:42'),
 (225, 'admin', 'Menambahkan galeri \'Juara 2 Futsal Putri\' dengan 5 foto', '2025-05-19 03:43:49'),
-(226, 'admin', 'Mengedit data prestasi ID 17', '2025-05-20 03:45:17');
+(226, 'admin', 'Mengedit data prestasi ID 17', '2025-05-20 03:45:17'),
+(227, 'admin', 'Menambahkan galeri \'Juara 2 Futsal Putri\' dengan 9 foto', '2025-05-26 08:12:37'),
+(228, 'admin', 'Menambahkan data prestasi NIS 999999999', '2025-06-13 08:07:16'),
+(229, 'admin', 'Menambahkan data prestasi NIS 999999999', '2025-06-13 08:55:39'),
+(230, 'admin', 'Menghapus data prestasi ID 121', '2025-06-13 08:55:53');
 
 -- --------------------------------------------------------
 
@@ -376,6 +395,7 @@ CREATE TABLE `prestasi` (
   `nama_lomba` varchar(255) NOT NULL,
   `tingkat` enum('Nasional','Keresidenan','Provinsi','Kabupaten','Kecamatan','Sekolah') NOT NULL,
   `juara` varchar(50) DEFAULT NULL,
+  `penyelenggara` varchar(200) NOT NULL,
   `tahun` date DEFAULT NULL,
   `kategori` varchar(100) DEFAULT NULL,
   `foto_bukti` varchar(255) DEFAULT NULL,
@@ -386,47 +406,48 @@ CREATE TABLE `prestasi` (
 -- Dumping data for table `prestasi`
 --
 
-INSERT INTO `prestasi` (`id`, `nis`, `nisn`, `nama_siswa`, `jurusan`, `nama_lomba`, `tingkat`, `juara`, `tahun`, `kategori`, `foto_bukti`, `deskripsi`) VALUES
-(1, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'TJKT', 'Lomba Robotika dan IOT Bidang Competition Robot Transporter ', 'Provinsi', 'Juara 3', '2023-12-16', 'Akademik', '', ''),
-(2, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'TJKT', 'Lomba Kompetensi Siswa Tingkat Sekolah Bidang Lomba: Information Network Cabling ', 'Sekolah', 'Juara 3', '2024-01-01', 'Akademik', '', ''),
-(3, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'TJKT', 'Lomba Kompetensi Siswa Tingkat Sekolah Information Network Cabling ', 'Sekolah', 'Juara 1', '2025-01-01', 'Akademik', '', ''),
-(4, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Vlog Gembira RAIMUNA CABANG XI KWARCAB TEGAL', 'Kabupaten', 'Juara 2', '2024-12-19', 'Akademik', '', ''),
-(5, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Desain Poster DEMA Creative Competition (DCC) 2024', 'Keresidenan', 'Juara 2', '2024-03-09', 'Akademik', '', ''),
-(6, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Iklan Layanan Masyarakat', 'Kabupaten', 'Juara 1', '2023-07-16', 'Akademik', '', ''),
-(7, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Internet of Things', 'Kabupaten', 'Juara 2', '2023-07-16', 'Akademik', '', ''),
-(8, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Karya Cipta Pramuka', 'Kabupaten', 'Juara 3', '2023-07-16', 'Akademik', '', ''),
-(9, '16587', '16613', 'Astri Rajulia', 'TJKT', 'Lomba Cerdas Cermat Pramuka Saka Bakti Husada', 'Kabupaten', 'Juara 1', '2023-10-25', 'Akademik', '', ''),
-(10, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Cerdas Cermat Saka Bakti Husada ', 'Kabupaten', 'Juara Harapan 3', '2024-01-01', 'Akademik', '', ''),
-(11, '16321', '16321', 'Selsya Dera Amanda', 'OTKP', 'Poster DEMA Creative DCC (IBN Tegal) 2024', 'Keresidenan', 'Juara 3', '2023-08-12', 'Akademik', '', ''),
-(12, '16769', '16769', 'Dwi Elfarianti', 'BPTV', 'Lomba Pramuka Garuda Berprestasi  Kwartir Cabang Tegal Tahun 2023', 'Kabupaten', 'Juara 3', '2023-07-16', 'Akademik', '', ''),
-(13, '16436', '16436', 'Alissya Aulia Putri', 'AKL', 'Mata Lomba Akuntansi Keuangan Lembaga Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '2024-03-02', 'Akademik', '', ''),
-(14, '15975', '15975', 'Dian Amaliah Putri', 'TJKT', 'Mata Lomba Cyber Security Lomba Kompetensi Siswa Sekolah Menengah Kejuruan', 'Kabupaten', 'Juara 1', '2024-03-02', 'Akademik', '', ''),
-(15, '16345', '16345', 'Khalifatur Rizati', 'OTKP', 'Mata Otomatisasi Tata Kelola Perkantoran Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '2024-03-02', 'Akademik', '', ''),
-(16, '16724', '16724', 'Ailsa Rahmawati', 'BPTV', 'Mata Online Marketing Lomba Kompetensi Siswa Sekolah Menengah Kejuruan Kabupaten Tegal Tahun 2024', 'Kabupaten', 'Juara 2', '2024-03-02', 'Akademik', '', ''),
-(17, '15861', '15861', 'Ahmad Zindan Chalwani', 'TJKT', 'Mata Information Network Cabling Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '2024-03-02', 'Akademik', '', ''),
-(18, '15987', '15987', 'Muhammad Fikri Ubaidillah', 'TJKT', 'Mata Cloud Computing Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '2024-03-02', 'Akademik', '', ''),
-(19, '16555', '16555', 'Fardan Abu Arbaz Basyari', 'PPLG', 'Mata Web Tecnologies Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '2024-03-02', 'Akademik', '', ''),
-(20, '17209', '17209', 'Rahsya Ramadhan Izzulhaq', 'RPL', 'Mata Graphic Design Technology Lomba Kompetensi Siswa Sekolah Menengah Kejuruan', 'Kabupaten', 'Juara 2', '2024-03-02', 'Akademik', '', ''),
-(21, '17769', '17769', 'Resa Naila Haya', 'OTKP', 'Pemilihan Duta genRe Kabupaten Tegal 2024', 'Kabupaten', '-', '2024-07-13', 'Non-Akademik', '', ''),
-(22, '17065', '17065', 'Marselia Angelia', 'AKL', 'Accounting Competition Tingkat SMA/SMK Se-Jawa Tengah 2024', 'Provinsi', 'Juara 2', '2024-07-27', 'Akademik', '', ''),
-(23, '17135', '17135', 'Nia Permatasari', 'AKL', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '2024-01-14', 'Non-Akademik', '', ''),
-(24, '17173', '17173', 'Linda Saputri', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '2024-01-14', 'Non-Akademik', '', ''),
-(25, '17170', '17170', 'Inka Retno Aptiana', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '2024-01-14', 'Non-Akademik', '', ''),
-(26, '16767', '16767', 'Dela Pratiwi', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '2024-01-14', 'Non-Akademik', '', ''),
-(27, '17467', '17467', 'Nasya Prima ZM', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '2024-01-14', 'Non-Akademik', '', ''),
-(28, '17463', '17463', 'Margareth Jesselyn A', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '2024-01-14', 'Akademik', '', ''),
-(29, '17532', '17532', 'Kayla Aulianisa', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '2024-01-14', 'Akademik', '', ''),
-(30, '17555', '17555', 'Aulia Rizki Dwi FA', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '2024-01-14', 'Akademik', '', ''),
-(31, '18054', '18054', 'Syafira Nurlaeli', 'TJKT', 'Lari 800 M Putri SMA/ SMK/MA Pekan Olahraga Pelajar Daerah (POPDA) SD/SMP/SMA/ Sederajat ', 'Kabupaten', 'Juara 2', '2024-09-05', 'Akademik', '', ''),
-(32, '18510', '18510', 'Muhammad Mirza Fadhil', 'AKL', 'Catur Klasik SMA Putra Pekan Olahraga Pelajar Daerah (POPDA) SD/SMP/SMA/ Sederajat Tingkat Kabupaten Tegal', 'Kabupaten', 'Juara 1', '2025-09-05', 'Akademik', '', ''),
-(33, '18510', '18510', 'Muhammad Mirza Fadhil', 'AKL', 'Catur Cepat SMA Putra Pekan Olahraga Pelajar Daerah (POPDA) SD/SMP/SMA/ Sederajat ', 'Kabupaten', 'Juara 3', '2024-09-05', 'Akademik', '', ''),
-(34, '17043', '17043', 'Salsa Ramadhani', 'AKL', 'Accounting Competition Tingkat SMA/SMK Se-Jawa Tengah 2024', 'Provinsi', 'Juara 2', '2024-07-27', 'Akademik', '', ''),
-(35, '17020', '17020', 'Dwi Ayu Tresnowati', 'AKL', 'Kejuaraan Provinsi Junior U-19 Putri Cabang Olahraga Bola Tangan', 'Provinsi', 'Juara 3', '2024-07-04', 'Akademik', '', ''),
-(36, '17036', '17036', 'Nova Amelia', 'AKL', 'Gajah Mada Competition 2 Tingkat Nasional', 'Nasional', 'Juara 1', '2024-09-15', 'Akademik', '', ''),
-(37, '17466', '17466', 'Mutiara Ananda Putri', 'BDP', 'Olimpiade Sains Siswa Indonesia Tingkat Nasiona Tahun 2024', 'Nasional', 'Juara 1', '2024-02-25', 'Akademik', '', ''),
-(38, '17015', '17015', 'Dhia Azka Nuroani', 'AKL', 'Olimpiade Pendidikan Agama Islam Nasional Ke-2 Jenjang SMA/SMK', 'Nasional', 'Juara 3', '2023-11-24', 'Akademik', '', ''),
-(39, '17187', '17187', 'Vena Annisa', 'BPTV', 'Olimpiade Pendidikan Agama Islam Nasional Ke-2 Jenjang SMA/SMK', 'Nasional', 'Juara 3', '2023-11-24', 'Akademik', '', ''),
-(119, '16587', '16613', 'Astri Rajulia', 'TJKT', 'Poster DEMA Creative DCC (IBN Tegal)', 'Keresidenan', 'Juara 3', '2024-01-01', 'NonAkademik', '', NULL);
+INSERT INTO `prestasi` (`id`, `nis`, `nisn`, `nama_siswa`, `jurusan`, `nama_lomba`, `tingkat`, `juara`, `penyelenggara`, `tahun`, `kategori`, `foto_bukti`, `deskripsi`) VALUES
+(1, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'TJKT', 'Lomba Robotika dan IOT Bidang Competition Robot Transporter ', 'Provinsi', 'Juara 3', '', '2023-12-16', 'Akademik', '', ''),
+(2, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'TJKT', 'Lomba Kompetensi Siswa Tingkat Sekolah Bidang Lomba: Information Network Cabling ', 'Sekolah', 'Juara 3', '', '2024-01-01', 'Akademik', '', ''),
+(3, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'TJKT', 'Lomba Kompetensi Siswa Tingkat Sekolah Information Network Cabling ', 'Sekolah', 'Juara 1', '', '2025-01-01', 'Akademik', '', ''),
+(4, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Vlog Gembira RAIMUNA CABANG XI KWARCAB TEGAL', 'Kabupaten', 'Juara 2', '', '2024-12-19', 'Akademik', '', ''),
+(5, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Desain Poster DEMA Creative Competition (DCC) 2024', 'Keresidenan', 'Juara 2', '', '2024-03-09', 'Akademik', '', ''),
+(6, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Iklan Layanan Masyarakat', 'Kabupaten', 'Juara 1', '', '2023-07-16', 'Akademik', '', ''),
+(7, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Internet of Things', 'Kabupaten', 'Juara 2', '', '2023-07-16', 'Akademik', '', ''),
+(8, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Karya Cipta Pramuka', 'Kabupaten', 'Juara 3', '', '2023-07-16', 'Akademik', '', ''),
+(9, '16587', '16613', 'Astri Rajulia', 'TJKT', 'Lomba Cerdas Cermat Pramuka Saka Bakti Husada', 'Kabupaten', 'Juara 1', '', '2023-10-25', 'Akademik', '', ''),
+(10, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'TJKT', 'Lomba Cerdas Cermat Saka Bakti Husada ', 'Kabupaten', 'Juara Harapan 3', '', '2024-01-01', 'Akademik', '', ''),
+(11, '16321', '16321', 'Selsya Dera Amanda', 'OTKP', 'Poster DEMA Creative DCC (IBN Tegal) 2024', 'Keresidenan', 'Juara 3', '', '2023-08-12', 'Akademik', '', ''),
+(12, '16769', '16769', 'Dwi Elfarianti', 'BPTV', 'Lomba Pramuka Garuda Berprestasi  Kwartir Cabang Tegal Tahun 2023', 'Kabupaten', 'Juara 3', '', '2023-07-16', 'Akademik', '', ''),
+(13, '16436', '16436', 'Alissya Aulia Putri', 'AKL', 'Mata Lomba Akuntansi Keuangan Lembaga Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '', '2024-03-02', 'Akademik', '', ''),
+(14, '15975', '15975', 'Dian Amaliah Putri', 'TJKT', 'Mata Lomba Cyber Security Lomba Kompetensi Siswa Sekolah Menengah Kejuruan', 'Kabupaten', 'Juara 1', '', '2024-03-02', 'Akademik', '', ''),
+(15, '16345', '16345', 'Khalifatur Rizati', 'OTKP', 'Mata Otomatisasi Tata Kelola Perkantoran Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '', '2024-03-02', 'Akademik', '', ''),
+(16, '16724', '16724', 'Ailsa Rahmawati', 'BPTV', 'Mata Online Marketing Lomba Kompetensi Siswa Sekolah Menengah Kejuruan Kabupaten Tegal Tahun 2024', 'Kabupaten', 'Juara 2', '', '2024-03-02', 'Akademik', '', ''),
+(17, '15861', '15861', 'Ahmad Zindan Chalwani', 'TJKT', 'Mata Information Network Cabling Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '', '2024-03-02', 'Akademik', '', ''),
+(18, '15987', '15987', 'Muhammad Fikri Ubaidillah', 'TJKT', 'Mata Cloud Computing Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '', '2024-03-02', 'Akademik', '', ''),
+(19, '16555', '16555', 'Fardan Abu Arbaz Basyari', 'PPLG', 'Mata Web Tecnologies Lomba Kompetensi Siswa Sekolah Menengah Kejuruan ', 'Kabupaten', 'Juara 1', '', '2024-03-02', 'Akademik', '', ''),
+(20, '17209', '17209', 'Rahsya Ramadhan Izzulhaq', 'RPL', 'Mata Graphic Design Technology Lomba Kompetensi Siswa Sekolah Menengah Kejuruan', 'Kabupaten', 'Juara 2', '', '2024-03-02', 'Akademik', '', ''),
+(21, '17769', '17769', 'Resa Naila Haya', 'OTKP', 'Pemilihan Duta genRe Kabupaten Tegal 2024', 'Kabupaten', '-', '', '2024-07-13', 'Non-Akademik', '', ''),
+(22, '17065', '17065', 'Marselia Angelia', 'AKL', 'Accounting Competition Tingkat SMA/SMK Se-Jawa Tengah 2024', 'Provinsi', 'Juara 2', '', '2024-07-27', 'Akademik', '', ''),
+(23, '17135', '17135', 'Nia Permatasari', 'AKL', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-01-14', 'Non-Akademik', '', ''),
+(24, '17173', '17173', 'Linda Saputri', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-01-14', 'Non-Akademik', '', ''),
+(25, '17170', '17170', 'Inka Retno Aptiana', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-01-14', 'Non-Akademik', '', ''),
+(26, '16767', '16767', 'Dela Pratiwi', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-01-14', 'Non-Akademik', '', ''),
+(27, '17467', '17467', 'Nasya Prima ZM', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-01-14', 'Non-Akademik', '', ''),
+(28, '17463', '17463', 'Margareth Jesselyn A', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-01-14', 'Akademik', '', ''),
+(29, '17532', '17532', 'Kayla Aulianisa', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-01-14', 'Akademik', '', ''),
+(30, '17555', '17555', 'Aulia Rizki Dwi FA', 'BPTV', 'Bola Voli Putri Antar Pelajar SMP/SMA Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-01-14', 'Akademik', '', ''),
+(31, '18054', '18054', 'Syafira Nurlaeli', 'TJKT', 'Lari 800 M Putri SMA/ SMK/MA Pekan Olahraga Pelajar Daerah (POPDA) SD/SMP/SMA/ Sederajat ', 'Kabupaten', 'Juara 2', '', '2024-09-05', 'Akademik', '', ''),
+(32, '18510', '18510', 'Muhammad Mirza Fadhil', 'AKL', 'Catur Klasik SMA Putra Pekan Olahraga Pelajar Daerah (POPDA) SD/SMP/SMA/ Sederajat Tingkat Kabupaten Tegal', 'Kabupaten', 'Juara 1', '', '2025-09-05', 'Akademik', '', ''),
+(33, '18510', '18510', 'Muhammad Mirza Fadhil', 'AKL', 'Catur Cepat SMA Putra Pekan Olahraga Pelajar Daerah (POPDA) SD/SMP/SMA/ Sederajat ', 'Kabupaten', 'Juara 3', '', '2024-09-05', 'Akademik', '', ''),
+(34, '17043', '17043', 'Salsa Ramadhani', 'AKL', 'Accounting Competition Tingkat SMA/SMK Se-Jawa Tengah 2024', 'Provinsi', 'Juara 2', '', '2024-07-27', 'Akademik', '', ''),
+(35, '17020', '17020', 'Dwi Ayu Tresnowati', 'AKL', 'Kejuaraan Provinsi Junior U-19 Putri Cabang Olahraga Bola Tangan', 'Provinsi', 'Juara 3', '', '2024-07-04', 'Akademik', '', ''),
+(36, '17036', '17036', 'Nova Amelia', 'AKL', 'Gajah Mada Competition 2 Tingkat Nasional', 'Nasional', 'Juara 1', '', '2024-09-15', 'Akademik', '', ''),
+(37, '17466', '17466', 'Mutiara Ananda Putri', 'BDP', 'Olimpiade Sains Siswa Indonesia Tingkat Nasiona Tahun 2024', 'Nasional', 'Juara 1', '', '2024-02-25', 'Akademik', '', ''),
+(38, '17015', '17015', 'Dhia Azka Nuroani', 'AKL', 'Olimpiade Pendidikan Agama Islam Nasional Ke-2 Jenjang SMA/SMK', 'Nasional', 'Juara 3', '', '2023-11-24', 'Akademik', '', ''),
+(39, '17187', '17187', 'Vena Annisa', 'BPTV', 'Olimpiade Pendidikan Agama Islam Nasional Ke-2 Jenjang SMA/SMK', 'Nasional', 'Juara 3', '', '2023-11-24', 'Akademik', '', ''),
+(119, '16587', '16613', 'Astri Rajulia', 'TJKT', 'Poster DEMA Creative DCC (IBN Tegal)', 'Keresidenan', 'Juara 3', '', '2024-01-01', 'NonAkademik', '', NULL),
+(122, '999999999', '111222334277', 'Kuncoro', 'Akuntansi', 'LKS SMK', 'Kecamatan', 'Juara 1', 'Dikbud', '2025-06-12', 'Akademik', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -451,38 +472,38 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id`, `nis`, `nisn`, `nama_siswa`, `jenis_kelamin`, `kelas`, `jurusan`, `tempat_lahir`, `tanggal_lahir`) VALUES
-(41, '125', '1112223338', 'riyan', 'Laki-Laki', 'Xll ', 'TJKT', '', NULL),
-(10, '15861', '16620', 'Ahmad Zindan Chalwani', 'Laki-Laki', 'XI TJKT', 'TJKT', '', NULL),
-(7, '15975', '16617', 'Dian Amaliah Putri', 'Perempuan', 'XI TJKT', 'TJKT', '', NULL),
-(11, '15987', '16621', 'Muhammad Fikri Ubaidillah', 'Laki-Laki', 'XI TJKT', 'TJKT', '', NULL),
-(4, '16321', '16614', 'Selsya Dera Amanda', 'Perempuan', 'XII OTKP 3', 'OTKP ', '', NULL),
-(8, '16345', '16618', 'Khalifatur Rizati', 'Perempuan', 'XI OTKP', 'OTKP', '', NULL),
-(6, '16436', '16616', 'Alissya Aulia Putri', 'Perempuan', 'XI AKL', 'AKL', '', NULL),
-(12, '16555', '16622', 'Fardan Abu Arbaz Basyari', 'Laki-Laki', 'XII PPLG 2', 'PPLG ', '', NULL),
-(3, '16587', '16613', 'Astri Rajulia', 'Perempuan', 'XII TJKT 1', 'TJKT', '', NULL),
+(1, '999999999', '111222334277', 'Kuncoro', 'Laki-Laki', 'Xll', 'TJKT', 'Tegal', NULL),
 (2, '16593', '16612', 'Ibnati Zalfa Qurrotu\'ain', 'Laki-Laki', 'XII TJKT 1', 'TJKT', '', NULL),
-(1, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'Laki-Laki', 'XII TJKT 1', 'TJKT', '', NULL),
-(9, '16724', '16619', 'Ailsa Rahmawati', 'Perempuan', 'XII BD 1', 'BPTV', '', NULL),
-(19, '16767', '16629', 'Dela Pratiwi', 'Perempuan', 'XII BR 1', 'BPTV', '', NULL),
+(3, '16587', '16613', 'Astri Rajulia', 'Perempuan', 'XII TJKT 1', 'TJKT', '', NULL),
+(4, '16321', '16614', 'Selsya Dera Amanda', 'Perempuan', 'XII OTKP 3', 'OTKP ', '', NULL),
 (5, '16769', '16615', 'Dwi Elfarianti', 'Perempuan', 'XII BR 1', 'BR ', '', NULL),
-(31, '17015', '16640', 'Dhia Azka Nuroani', 'Laki-Laki', 'XII AKL 1', 'AKL ', '', NULL),
-(28, '17020', '16637', 'Dwi Ayu Tresnowati', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
-(29, '17036', '16638', 'Nova Amelia', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
-(27, '17043', '16636', 'Salsa Ramadhani', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
+(6, '16436', '16616', 'Alissya Aulia Putri', 'Perempuan', 'XI AKL', 'AKL', '', NULL),
+(7, '15975', '16617', 'Dian Amaliah Putri', 'Perempuan', 'XI TJKT', 'TJKT', '', NULL),
+(8, '16345', '16618', 'Khalifatur Rizati', 'Perempuan', 'XI OTKP', 'OTKP', '', NULL),
+(9, '16724', '16619', 'Ailsa Rahmawati', 'Perempuan', 'XII BD 1', 'BPTV', '', NULL),
+(10, '15861', '16620', 'Ahmad Zindan Chalwani', 'Laki-Laki', 'XI TJKT', 'TJKT', '', NULL),
+(11, '15987', '16621', 'Muhammad Fikri Ubaidillah', 'Laki-Laki', 'XI TJKT', 'TJKT', '', NULL),
+(12, '16555', '16622', 'Fardan Abu Arbaz Basyari', 'Laki-Laki', 'XII PPLG 2', 'PPLG ', '', NULL),
+(13, '17209', '16623', 'Rahsya Ramadhan Izzulhaq', 'Laki-Laki', 'XI RPL', 'RPL', '', NULL),
+(14, '17769', '16624', 'Resa Naila Haya', 'Laki-Laki', 'XI OTKP', 'OTKP', '', NULL),
 (15, '17065', '16625', 'Marselia Angelia', 'Perempuan', 'XII AKL 2', 'AKL ', '', NULL),
 (16, '17135', '16626', 'Nia Permatasari', 'Perempuan', 'XII AKL 4', 'AKL', '', NULL),
-(18, '17170', '16628', 'Inka Retno Aptiana', 'Perempuan', 'XII BP 1', 'BPTV', '', NULL),
 (17, '17173', '16627', 'Linda Saputri', 'Perempuan', 'XII BP 1', 'BPTV', '', NULL),
-(32, '17187', '16641', 'Vena Annisa', 'Perempuan', 'XII BP 1', 'BPTV', '', NULL),
-(13, '17209', '16623', 'Rahsya Ramadhan Izzulhaq', 'Laki-Laki', 'XI RPL', 'RPL', '', NULL),
-(21, '17463', '16631', 'Margareth Jesselyn A', 'Perempuan', 'XI BD 1', 'BPTV', '', NULL),
-(30, '17466', '16639', 'Mutiara Ananda Putri', 'Perempuan', 'XI BDP 1', 'PM', '', NULL),
+(18, '17170', '16628', 'Inka Retno Aptiana', 'Perempuan', 'XII BP 1', 'BPTV', '', NULL),
+(19, '16767', '16629', 'Dela Pratiwi', 'Perempuan', 'XII BR 1', 'BPTV', '', NULL),
 (20, '17467', '16630', 'Nasya Prima ZM', 'Laki-Laki', 'XI BD 1', 'BPTV', '', NULL),
+(21, '17463', '16631', 'Margareth Jesselyn A', 'Perempuan', 'XI BD 1', 'BPTV', '', NULL),
 (22, '17532', '16632', 'Kayla Aulianisa', 'Laki-Laki', 'XI BR 2', 'BPTV', '', NULL),
 (23, '17555', '16633', 'Aulia Rizki Dwi FA', 'Laki-Laki', 'XI BR 3', 'BPTV', '', NULL),
-(14, '17769', '16624', 'Resa Naila Haya', 'Laki-Laki', 'XI OTKP', 'OTKP', '', NULL),
 (24, '18054', '16634', 'Syafira Nurlaeli', 'Laki-Laki', 'X TJKT', 'TJKT', '', NULL),
-(25, '18510', '16635', 'Muhammad Mirza Fadhil', 'Laki-Laki', 'X AKL 4', 'X AKL 4', '', NULL);
+(25, '18510', '16635', 'Muhammad Mirza Fadhil', 'Laki-Laki', 'X AKL 4', 'X AKL 4', '', NULL),
+(27, '17043', '16636', 'Salsa Ramadhani', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
+(28, '17020', '16637', 'Dwi Ayu Tresnowati', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
+(29, '17036', '16638', 'Nova Amelia', 'Perempuan', 'XII AKL 1', 'AKL ', '', NULL),
+(30, '17466', '16639', 'Mutiara Ananda Putri', 'Perempuan', 'XI BDP 1', 'PM', '', NULL),
+(31, '17015', '16640', 'Dhia Azka Nuroani', 'Laki-Laki', 'XII AKL 1', 'AKL ', '', NULL),
+(32, '17187', '16641', 'Vena Annisa', 'Perempuan', 'XII BP 1', 'BPTV', '', NULL),
+(33, '16611', '16611', 'Rio Reifan Rexy Rashendrya', 'Laki-Laki', 'XII TJKT 1', 'TJKT', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -578,7 +599,7 @@ ALTER TABLE `prestasi`
 -- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
-  ADD PRIMARY KEY (`nis`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `siswa_prestasi`
@@ -606,31 +627,37 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `gallery_foto`
 --
 ALTER TABLE `gallery_foto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `jurusan`
 --
 ALTER TABLE `jurusan`
-  MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `log_aktivitas`
 --
 ALTER TABLE `log_aktivitas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=231;
 
 --
 -- AUTO_INCREMENT for table `prestasi`
 --
 ALTER TABLE `prestasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+
+--
+-- AUTO_INCREMENT for table `siswa`
+--
+ALTER TABLE `siswa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `spmb`
