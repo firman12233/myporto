@@ -18,6 +18,7 @@ if (isset($_POST['simpan'])) {
   $kelas = $_POST['kelas'];
   $jurusan = $_POST['jurusan'];
   $tempat_lahir = $_POST['tempat_lahir'];
+  $tanggal_lahir = $_POST['tanggal_lahir'];
 
   // Cek apakah NIS atau NISN sudah ada
   $cek = mysqli_query($koneksi, "SELECT * FROM siswa WHERE nis = '$nis' OR nisn = '$nisn'");
@@ -27,8 +28,8 @@ if (isset($_POST['simpan'])) {
   }
 
   // Jika tidak duplikat, simpan
-  $query = "INSERT INTO siswa (nis, nisn, nama_siswa, jenis_kelamin, kelas, jurusan, tempat_lahir) 
-            VALUES ('$nis', '$nisn', '$nama_siswa', '$jenis_kelamin', '$kelas', '$jurusan', '$tempat_lahir')";
+  $query = "INSERT INTO siswa (nis, nisn, nama_siswa, jenis_kelamin, kelas, jurusan, tempat_lahir, tanggal_lahir) 
+            VALUES ('$nis', '$nisn', '$nama_siswa', '$jenis_kelamin', '$kelas', '$jurusan', '$tempat_lahir', '$tanggal_lahir')";
   $result = mysqli_query($koneksi, $query);
 
   if ($result) {
@@ -92,6 +93,10 @@ if (isset($_POST['simpan'])) {
     <div class="mb-3">
       <label for="inputTempatLahir" class="form-label">Tempat Lahir</label>
       <input type="text" class="form-control" id="inputTempatLahir" name="tempat_lahir" required>
+    </div>
+      <div class="mb-3">
+      <label for="inputTanggalLahir" class="form-label">Tanggal Lahir</label>
+      <input type="date" class="form-control" id="inputTanggalLahir" name="tanggal_lahir" required>
     </div>
     <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
     <a href="index.php" class="btn btn-secondary">Kembali</a>
