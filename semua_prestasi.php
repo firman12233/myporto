@@ -88,7 +88,7 @@ while ($jur = mysqli_fetch_assoc($jurusan_query)) {
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
               <li><a class="dropdown-item" href="log_aktivitas.php">Log Aktivitas</a></li>
               <li><a class="dropdown-item" href="tambah_siswa.php">Tambah Siswa</a></li>
-              <li><a class="dropdown-item" href="semua_jurusan.php">Tambah Jurusan</a></li>
+              <li><a class="dropdown-item" href="semua_jurusan.php">Tambah Kompetensi Keahlian</a></li>
               <li><a class="dropdown-item" href="tambah_admin.php">Tambah Admin</a></li>
             <?php endif; ?>
           </ul>
